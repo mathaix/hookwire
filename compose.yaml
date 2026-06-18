@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: hookwire
+      POSTGRES_PASSWORD: hookwire
+    ports:
+      - "54322:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d hookwire"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    volumes:
+      - hookwire-postgres-data:/var/lib/postgresql/data
+
+volumes:
+  hookwire-postgres-data:

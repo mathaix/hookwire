@@ -102,6 +102,9 @@ Supported `agent_type` values should include `claude`, `codex`, and `openclaw`.
 - machine_fingerprint
 - relay_version
 - status
+- revoked_at
+- revoked_by_user_id
+- revocation_reason
 - last_seen_at
 - created_at
 - updated_at
@@ -134,6 +137,8 @@ Supported `agent_type` values should include `claude`, `codex`, and `openclaw`.
 ### relay_request_nonces
 
 - id
+- organization_id
+- project_id
 - installation_credential_id
 - nonce_hash
 - seen_at
@@ -159,6 +164,7 @@ Used to prevent replay of signed relay requests within the accepted clock-skew w
 - started_at
 - ended_at
 - last_seen_at
+- updated_at
 
 `started_by_user_id` is the best-known human owner from onboarding or explicit local login. `claimed_by_user_id` is set when a web user manually claims a session. Both are nullable and must be tracked in audit events when changed.
 
@@ -226,6 +232,7 @@ Used by web-to-CLI login or device-code setup. Completion registers `agent_tools
 ### policy_rules
 
 - id
+- organization_id
 - policy_id
 - name
 - priority
@@ -254,6 +261,7 @@ Used by web-to-CLI login or device-code setup. Completion registers `agent_tools
 ### route_targets
 
 - id
+- organization_id
 - route_id
 - target_type
 - integration_id
@@ -280,6 +288,7 @@ Example `target_type` values: `web_inbox`, `slack`, `sms`, `jira`, `linear`, `em
 ### approval_group_members
 
 - id
+- organization_id
 - approval_group_id
 - user_id
 - role
@@ -358,6 +367,7 @@ Example `provider` values: `slack`, `twilio`, `jira`, `linear`, `github`, `email
 ### approval_deliveries
 
 - id
+- organization_id
 - approval_request_id
 - integration_id
 - route_target_id

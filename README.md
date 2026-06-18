@@ -14,6 +14,10 @@ Hookwire has three major surfaces:
 
 The first runnable milestone is the web app itself. Slack, SMS, Jira, Linear, email, GitHub, and webhook approvals should be represented in the routing and integration model, but the first delivery path can be the Hookwire web inbox.
 
+## Local Development
+
+The initial Postgres schema and migration runner live in [packages/db](packages/db/README.md). For local schema work, start Postgres with Docker Compose and run the migration commands from the repository root.
+
 ## Architecture Decisions
 
 - Postgres is the source of truth for the hosted or self-hosted control plane.
