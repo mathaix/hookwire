@@ -97,7 +97,7 @@ Tasks:
 - [x] [Project foundation and architecture docs](issues/001-project-foundation.md)
 - [x] [User onboarding and session identity association](issues/019-user-onboarding-session-identity.md)
 - [x] [Key-based relay authentication and revocation](issues/020-key-based-relay-authentication.md)
-- [ ] [GitHub Actions CI for public repository](issues/021-github-actions-ci.md)
+- [x] [GitHub Actions CI for public repository](issues/021-github-actions-ci.md)
 
 Deliverables:
 
@@ -106,7 +106,7 @@ Deliverables:
 - Key-based relay identity design.
 - Public-repo CI task and contribution verification plan.
 
-Status: in progress; public-repo CI wiring remains open.
+Status: complete.
 
 ### Phase 1: Web Control Plane Foundation
 
@@ -353,7 +353,7 @@ Estimated effort: 2-3 weeks.
 
 | Milestone | Target | Status |
 | --- | --- | --- |
-| Phase 0 complete | After issue 021 | In progress |
+| Phase 0 complete | Now | Complete |
 | Phase 1 complete | Week 1-2 | Planned |
 | Phase 2 complete | Week 3-4 | Planned |
 | Phase 3 complete | Week 5-6 | Planned |
@@ -385,7 +385,7 @@ Estimated effort: 2-3 weeks.
 
 ## Progress Tracking
 
-- Phase 0: In progress; GitHub Actions CI remains open.
+- Phase 0: Complete.
 - Phase 1: Not started.
 - Phase 2: Not started.
 - Phase 3: Not started.
@@ -394,4 +394,4 @@ Estimated effort: 2-3 weeks.
 - Phase 6: Not started.
 - Phase 7: Not started.
 
-Latest update: 2026-06-18. Added the verification standard, clarified when Claude review is required, and added the GitHub Actions CI task for the public repository.
+Latest update: 2026-06-18. Completed the GitHub Actions CI task for the public repository and marked Phase 0 complete.
