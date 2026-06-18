@@ -22,9 +22,11 @@ Unit tests must keep at least 90% coverage. Issue work should add failing tests 
 
 All changes should land through a pull request. Repository policy: direct pushes to `main` are blocked by the repository ruleset or branch protection, and pull requests must pass the required status checks before merge.
 
-The expected required status check is:
+The expected required status check context is:
 
-- `CI / Verification`
+- `Verification`
+
+GitHub may display that job under the `CI` workflow in the Actions UI.
 
 Administrator bypass is disabled by default. If an emergency bypass is ever enabled, maintainers must document the reason, scope, and follow-up verification in the related issue or pull request before considering the work complete.
 

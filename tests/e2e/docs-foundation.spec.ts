@@ -25,5 +25,6 @@ test("CONTRIBUTING documents local CI and main protection expectations", async (
   await expect(page.locator("body")).toContainText("npm run test:e2e");
   await expect(page.locator("body")).toContainText("direct pushes to `main` are blocked");
   await expect(page.locator("body")).toContainText("required status checks");
+  await expect(page.locator("body")).toContainText("Verification");
   await expect(page.locator("body")).toContainText("Administrator bypass is disabled by default");
 });
