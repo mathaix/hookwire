@@ -24,6 +24,8 @@ The first runnable milestone is the web app itself. Slack, SMS, Jira, Linear, em
 
 ## Repo Planning
 
+Architecture details live in [docs/architecture.md](docs/architecture.md).
+The multiuser data model lives in [docs/data-model.md](docs/data-model.md).
 The initial implementation backlog lives in [docs/issues](docs/issues/README.md).
 The sequenced implementation plan lives in [docs/implementation-plan.md](docs/implementation-plan.md).
 The verification and Claude review standard lives in [docs/verification.md](docs/verification.md).

@@ -16,6 +16,11 @@ out/
 *.log
 .logs/
 
+# test outputs
+coverage/
+test-results/
+playwright-report/
+
 # local data
 *.sqlite
 *.sqlite3
@@ -24,4 +29,3 @@ out/
 .DS_Store
 .idea/
 .vscode/
-
