@@ -31,6 +31,7 @@ The sequenced implementation plan lives in [docs/implementation-plan.md](docs/im
 The verification and Claude review standard lives in [docs/verification.md](docs/verification.md).
 Contributor setup and pull request expectations live in [CONTRIBUTING.md](CONTRIBUTING.md).
 Local review artifacts can be stored under [docs/reviews](docs/reviews/README.md) until a PR system is connected.
+Temporary CI failure proof link: [broken](docs/this-file-should-not-exist.md).
 
 ## Open Source Readiness
 
