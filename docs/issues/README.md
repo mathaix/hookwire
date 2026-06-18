@@ -50,3 +50,4 @@ This backlog is written as GitHub-ready issue specs. There is no remote configur
 17. [Integration adapter framework](017-integration-adapter-framework.md)
 18. [Slack integration adapter](018-slack-integration.md)
 19. [User onboarding and session identity association](019-user-onboarding-session-identity.md)
+20. [Key-based relay authentication and revocation](020-key-based-relay-authentication.md)

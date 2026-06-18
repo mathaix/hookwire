@@ -70,6 +70,7 @@ Target providers:
 ### Local Machine
 
 - Local relay config
+- Locally generated private keys for registered relay installations
 - Cached policy bundle
 - Local session cache
 - Local audit queue
@@ -98,9 +99,10 @@ User signs in to Hookwire web
   -> creates or connects project
   -> chooses supported tools: Claude Code, Codex, OpenClaw
   -> runs hookwire login or device-code login locally
+  -> Hookwire CLI generates a local public/private keypair
   -> runs hookwire init for selected project/tools
-  -> backend registers agent tool + machine installation
-  -> installer writes local relay credentials and hook config
+  -> backend registers agent tool + machine installation + public key
+  -> installer stores the private key locally and writes hook config
   -> each session created by that relay is linked back to the installation, project, tool, organization, and onboarding user
 ```
 
@@ -125,10 +127,39 @@ users
 - The web app authenticates people.
 - The local relay authenticates as an `agent_installation`, not as a browser session.
 - An installation is registered by a logged-in user during onboarding.
+- Relay identity must be cryptographic and non-spoofable. A relay request is trusted only when it is signed by a non-revoked private key whose public key is registered to that installation.
 - A session inherits `organization_id`, `project_id`, `agent_tool_id`, and `agent_installation_id` from the installation credential used by the relay.
 - A session can have a nullable `started_by_user_id`. For a solo developer this usually matches the installation owner. For shared machines, CI, or service accounts it can be null or point to a service identity.
 - A decision always records the human or integration identity that approved or denied it. The approver is separate from the session owner.
 - Manual claim or reassignment should be auditable when session ownership cannot be inferred confidently.
+
+### Key-Based Relay Authentication
+
+Each local installation should generate an asymmetric keypair automatically during onboarding. Ed25519 is a good default for v1 because signatures are small, fast, and widely supported.
+
+Rules:
+
+- The private key is generated locally and never sent to Hookwire.
+- The public key is registered with the backend through a logged-in user onboarding session.
+- The backend stores the public key, key fingerprint, algorithm, installation, project, organization, registering user, and revocation status.
+- Every relay API request includes a key id, timestamp, nonce, body hash, and signature over the request context.
+- The backend verifies the signature, rejects stale timestamps, rejects replayed nonces, and checks that the key and installation are active.
+- Revoking a key immediately prevents that relay from creating sessions, creating approval requests, syncing audit events, or receiving decisions.
+- Key registration, rotation, and revocation are audit events.
+- Key rotation should create a new key before revoking the old one so the installer can recover cleanly.
+
+The signed request context should include at least:
+
+```text
+method
+path
+body_sha256
+timestamp
+nonce
+organization_id
+project_id
+agent_installation_id
+```
 
 ## V1 Approval Flow
 

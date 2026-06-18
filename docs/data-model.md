@@ -22,6 +22,24 @@ The schema should support teams from the start, even if v1 ships with a simple w
 - created_at
 - updated_at
 
+### user_device_keys
+
+- id
+- organization_id
+- user_id
+- public_key
+- key_fingerprint
+- key_algorithm
+- display_name
+- status
+- last_used_at
+- revoked_at
+- revoked_by_user_id
+- created_at
+- updated_at
+
+Used for CLI/device identity created during onboarding. Private keys are generated and stored locally; only public keys are persisted by the backend.
+
 ### memberships
 
 - id
@@ -96,12 +114,32 @@ Supported `agent_type` values should include `claude`, `codex`, and `openclaw`.
 - organization_id
 - project_id
 - agent_installation_id
-- token_hash
+- user_device_key_id
+- public_key
+- key_fingerprint
+- key_algorithm
+- status
+- last_nonce_seen_at
 - last_used_at
 - expires_at
+- rotated_from_credential_id
 - revoked_at
+- revoked_by_user_id
+- revocation_reason
 - created_at
 - updated_at
+
+`installation_credentials` should be asymmetric signing credentials, not bearer tokens. The relay signs requests with the local private key; the backend verifies signatures with the registered public key and rejects revoked credentials.
+
+### relay_request_nonces
+
+- id
+- installation_credential_id
+- nonce_hash
+- seen_at
+- expires_at
+
+Used to prevent replay of signed relay requests within the accepted clock-skew window.
 
 ### agent_sessions
 
@@ -160,13 +198,15 @@ Example `source` values: `installation_owner`, `cli_login`, `manual_claim`, `git
 - project_id
 - status
 - device_code_hash
+- user_device_key_id
+- public_key_challenge
 - selected_agent_types
 - expires_at
 - completed_at
 - created_at
 - updated_at
 
-Used by web-to-CLI login or device-code setup. Completion registers `agent_tools`, `agent_installations`, and `installation_credentials`.
+Used by web-to-CLI login or device-code setup. Completion registers `agent_tools`, `agent_installations`, public-key-backed `installation_credentials`, and optionally a reusable `user_device_key`.
 
 ## Policy and Routing
 
