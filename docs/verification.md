@@ -14,7 +14,7 @@ Each issue implementation should produce a proof package with:
 - Database query output for persistence, audit, tenancy, or identity claims.
 - API request/response examples for backend contracts.
 - Security evidence for authentication, authorization, redaction, revocation, replay protection, and tenant isolation.
-- Claude review output and disposition of findings.
+- Claude review output and disposition of findings for code-bearing or functional changes.
 
 Do not mark an issue complete when proof is indirect, partial, or only covers a narrower path than the issue describes.
 
@@ -24,13 +24,15 @@ Each issue defines three verification sections:
 
 - **Automated Checks**: commands, tests, migrations, static checks, benchmarks, or browser checks that must pass.
 - **Proof Artifacts**: concrete evidence to attach to the PR or store under `docs/reviews/` when working locally.
-- **Claude Review Gate**: independent Claude review focused on the issue's risk area.
+- **Claude Review Gate**: independent Claude review focused on the issue's risk area when the issue changes code, schemas, runtime behavior, tests, security-sensitive configuration, or functional product behavior.
 
 ## Claude Review Gate
 
-Every issue requires a Claude review before it is considered done. For documentation-only or planning-only issues, Claude reviews the docs, acceptance criteria, verification constraints, and proof package. For code-bearing issues, Claude also reviews the implementation code, tests, security properties, and runtime behavior.
+Claude review is mandatory before code-bearing or functional issue work is considered done. Documentation-only and planning-only issues can use Claude review when the change is broad, security-sensitive, or likely to affect implementation decisions, but they are primarily gated by automated docs checks, link checks, contributor-readiness checks, and clear proof artifacts.
 
-Code-bearing means an issue changes executable source, schema migrations, configuration that affects runtime behavior, installer logic, integration behavior, or tests. Pure planning, prose-only docs, and issue-maintenance changes are not code-bearing, but they still require a Claude review focused on documentation correctness and completeness.
+Code-bearing means an issue changes executable source, schema migrations, configuration that affects runtime behavior, installer logic, integration behavior, integration contracts, generated artifacts, or tests. Functional means the issue changes product behavior, API contracts, data semantics, security/privacy guarantees, or user-visible workflows even if the implementation is partly configuration.
+
+Pure planning, prose-only docs, and issue-maintenance changes are not code-bearing. For those issues, record the automated checks and contributor-readiness review; Claude review is optional unless the issue itself explicitly calls for it.
 
 Use the reproducible per-issue path by default:
 
@@ -49,7 +51,7 @@ The review prompt must include:
 - The proof artifacts collected.
 - A request to focus on correctness, security, privacy, test coverage, edge cases, and missed requirements.
 
-Required disposition:
+Required disposition when Claude review is required or run:
 
 - P0/P1 findings must be fixed before completion.
 - P2 findings must be fixed or explicitly deferred with rationale.
@@ -88,6 +90,20 @@ Weak evidence:
 - A seed script that creates data but no test that verifies behavior.
 - A broad code review that does not reference the issue's acceptance criteria.
 
+## Documentation Quality
+
+Hookwire is intended to be an open-source project. Public-facing docs should be treated as part of the product and should be updated with the same change that introduces or changes behavior.
+
+For open-source readiness, functional changes should include or update:
+
+- README or quickstart guidance when installation, setup, commands, or workflows change.
+- Architecture or design docs when runtime boundaries, security posture, or data flow changes.
+- Data model docs when schema, tenancy, identity, audit, or integration semantics change.
+- Issue proof artifacts that a contributor can reproduce locally.
+- Clear notes about required services, local development commands, and expected test commands.
+
+Documentation-only changes still need verification, but they do not need Claude review unless the documentation affects security posture, public API promises, or implementation decisions.
+
 ## Completion Checklist
 
 Before closing an issue:
@@ -95,6 +111,7 @@ Before closing an issue:
 - [ ] Every acceptance criterion has direct evidence.
 - [ ] Every automated check listed in the issue has run or has a documented blocker.
 - [ ] Every proof artifact listed in the issue is attached or linked.
-- [ ] Claude review has run and findings are resolved or dispositioned.
+- [ ] Claude review has run and findings are resolved or dispositioned when the issue is code-bearing, functional, security-sensitive, or explicitly requests Claude review.
 - [ ] Security/privacy claims are backed by negative tests, not just happy paths.
 - [ ] Audit behavior is verified when the issue touches identity, decisions, policies, routes, integrations, or credentials.
+- [ ] Public-facing docs are updated when the change affects open-source users or contributors.

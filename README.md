@@ -30,3 +30,7 @@ The initial implementation backlog lives in [docs/issues](docs/issues/README.md)
 The sequenced implementation plan lives in [docs/implementation-plan.md](docs/implementation-plan.md).
 The verification and Claude review standard lives in [docs/verification.md](docs/verification.md).
 Local review artifacts can be stored under [docs/reviews](docs/reviews/README.md) until a PR system is connected.
+
+## Open Source Readiness
+
+Hookwire is intended to be developed in public. Contributor-facing setup, verification, and architecture docs should be updated alongside functional changes. The GitHub Actions CI task is tracked in [docs/issues/021-github-actions-ci.md](docs/issues/021-github-actions-ci.md).

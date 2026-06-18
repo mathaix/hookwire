@@ -1,6 +1,6 @@
 # Hookwire Issue Backlog
 
-This backlog is written as GitHub-ready issue specs. There is no remote configured yet, so these live locally until the repo is connected to GitHub.
+This backlog is written as GitHub-ready issue specs. Local files remain the source of truth until matching GitHub issues are created in the public repository.
 
 ## Milestones
 
@@ -22,6 +22,8 @@ This backlog is written as GitHub-ready issue specs. There is no remote configur
 - `area:audit`
 - `area:security`
 - `area:onboarding`
+- `area:ci`
+- `area:docs`
 - `type:feature`
 - `type:design`
 - `type:infra`
@@ -51,7 +53,8 @@ This backlog is written as GitHub-ready issue specs. There is no remote configur
 18. [Slack integration adapter](018-slack-integration.md)
 19. [User onboarding and session identity association](019-user-onboarding-session-identity.md)
 20. [Key-based relay authentication and revocation](020-key-based-relay-authentication.md)
+21. [GitHub Actions CI for public repository](021-github-actions-ci.md)
 
 ## Verification
 
-Every issue includes verification constraints and a Claude review gate. Use the shared [verification standard](../verification.md) when implementing or closing issues.
+Every issue includes verification constraints. Code-bearing, functional, runtime, and security-sensitive issues also require the shared [Claude review gate](../verification.md#claude-review-gate). Documentation-only issues follow the shared [verification standard](../verification.md) and use Claude review when explicitly called for or when the docs affect security posture, public API promises, or implementation decisions.

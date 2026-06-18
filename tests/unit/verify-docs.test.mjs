@@ -22,9 +22,9 @@ describe("issue 001 docs verification", () => {
     const issues = await parseIssueIndex(path.join(repoRoot, "docs/issues/README.md"));
     const report = await buildIssueCompletenessReport(repoRoot, issues);
 
-    expect(issues).toHaveLength(20);
+    expect(issues).toHaveLength(21);
     expect(report.missing).toEqual([]);
-    expect(report.present).toHaveLength(20);
+    expect(report.present).toHaveLength(21);
   });
 
   it("rejects missing issue files from the backlog index", async () => {
@@ -293,10 +293,10 @@ describe("issue 001 docs verification", () => {
 
     expect(readme).toContain("Hookwire");
     expect(report.ok).toBe(true);
-    expect(report.issues.present).toHaveLength(20);
-      expect(report.links.missing).toEqual([]);
-      expect(report.legacyName.matches).toEqual([]);
-      expect(report.readiness.missing).toEqual([]);
-      expect(report.decisions.missing).toEqual([]);
-    });
+    expect(report.issues.present).toHaveLength(21);
+    expect(report.links.missing).toEqual([]);
+    expect(report.legacyName.matches).toEqual([]);
+    expect(report.readiness.missing).toEqual([]);
+    expect(report.decisions.missing).toEqual([]);
+  });
 });

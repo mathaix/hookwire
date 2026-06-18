@@ -90,21 +90,23 @@ The first milestone can create only the web/backend packages. The Go CLI and rel
 
 ### Phase 0: Product Foundation
 
-Goal: establish the initial architecture, issue backlog, and security model.
+Goal: establish the initial architecture, issue backlog, security model, and open-source contribution foundation.
 
 Tasks:
 
 - [x] [Project foundation and architecture docs](issues/001-project-foundation.md)
 - [x] [User onboarding and session identity association](issues/019-user-onboarding-session-identity.md)
 - [x] [Key-based relay authentication and revocation](issues/020-key-based-relay-authentication.md)
+- [ ] [GitHub Actions CI for public repository](issues/021-github-actions-ci.md)
 
 Deliverables:
 
 - Architecture and data model docs.
 - Local issue backlog.
 - Key-based relay identity design.
+- Public-repo CI task and contribution verification plan.
 
-Status: complete.
+Status: in progress; public-repo CI wiring remains open.
 
 ### Phase 1: Web Control Plane Foundation
 
@@ -351,7 +353,7 @@ Estimated effort: 2-3 weeks.
 
 | Milestone | Target | Status |
 | --- | --- | --- |
-| Phase 0 complete | Now | Complete |
+| Phase 0 complete | After issue 021 | In progress |
 | Phase 1 complete | Week 1-2 | Planned |
 | Phase 2 complete | Week 3-4 | Planned |
 | Phase 3 complete | Week 5-6 | Planned |
@@ -372,7 +374,7 @@ Estimated effort: 2-3 weeks.
 - [ ] External provider approvals use canonical decisions.
 - [ ] Audit trail covers all security-relevant changes.
 - [ ] Every closed issue has proof artifacts satisfying its verification constraints.
-- [ ] Every closed issue has a completed Claude review with findings resolved or dispositioned.
+- [ ] Every closed code-bearing, functional, runtime, or security-sensitive issue has a completed Claude review with findings resolved or dispositioned.
 
 ### Product Success
 
@@ -383,7 +385,7 @@ Estimated effort: 2-3 weeks.
 
 ## Progress Tracking
 
-- Phase 0: Complete.
+- Phase 0: In progress; GitHub Actions CI remains open.
 - Phase 1: Not started.
 - Phase 2: Not started.
 - Phase 3: Not started.
@@ -392,4 +394,4 @@ Estimated effort: 2-3 weeks.
 - Phase 6: Not started.
 - Phase 7: Not started.
 
-Latest update: 2026-06-18. Added the verification standard and Claude review requirement to the implementation plan and issue backlog.
+Latest update: 2026-06-18. Added the verification standard, clarified when Claude review is required, and added the GitHub Actions CI task for the public repository.
