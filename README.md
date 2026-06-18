@@ -25,4 +25,4 @@ The first runnable milestone is the web app itself. Slack, SMS, Jira, Linear, em
 ## Repo Planning
 
 The initial implementation backlog lives in [docs/issues](docs/issues/README.md).
-
+The sequenced implementation plan lives in [docs/implementation-plan.md](docs/implementation-plan.md).
