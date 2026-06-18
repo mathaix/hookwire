@@ -33,4 +33,4 @@ Local review artifacts can be stored under [docs/reviews](docs/reviews/README.md
 
 ## Open Source Readiness
 
-Hookwire is intended to be developed in public. Contributor-facing setup, verification, and architecture docs should be updated alongside functional changes. The GitHub Actions CI task is tracked in [docs/issues/021-github-actions-ci.md](docs/issues/021-github-actions-ci.md).
+Hookwire is intended to be developed in public. Contributor-facing setup, verification, and architecture docs should be updated alongside functional changes. The GitHub Actions CI task, including `main` branch protection against direct writes, is tracked in [docs/issues/021-github-actions-ci.md](docs/issues/021-github-actions-ci.md).
