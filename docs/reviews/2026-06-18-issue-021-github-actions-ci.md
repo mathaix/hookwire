@@ -44,6 +44,13 @@ Passing CI:
 - Required check context: `Verification`
 - Result: success
 
+Completion proof CI:
+
+- Run: https://github.com/mathaix/hookwire/actions/runs/27775254728
+- Commit: `091d4c9e4385cd8b04d209c19f5da1b429599aea`
+- Event: `push`
+- Result: success
+
 Failure-mode proof:
 
 - Temporary PR: https://github.com/mathaix/hookwire/pull/1
@@ -64,35 +71,56 @@ Playwright artifact proof:
 
 ## Branch Protection Evidence
 
-Applied protection endpoint:
+Final active protection is implemented with a repository ruleset. Classic branch protection was removed after GitHub treated a zero-review pull request rule as review-required.
 
-- `PUT /repos/mathaix/hookwire/branches/main/protection`
+Ruleset endpoint:
 
-Verified settings:
+- `PUT /repos/mathaix/hookwire/rulesets/17851876`
+
+Verified active rules for `main`:
 
 ```json
-{
-  "allow_deletions": false,
-  "allow_force_pushes": false,
-  "checks": [{"app_id": 15368, "context": "Verification"}],
-  "contexts": ["Verification"],
-  "dismiss_stale_reviews": true,
-  "enforce_admins": true,
-  "required_conversation_resolution": true,
-  "required_reviews": 0,
-  "strict": true
-}
+[
+  {
+    "type": "pull_request",
+    "parameters": {
+      "allowed_merge_methods": ["squash", "merge", "rebase"],
+      "dismiss_stale_reviews_on_push": true,
+      "require_code_owner_review": false,
+      "require_last_push_approval": false,
+      "required_approving_review_count": 0,
+      "required_review_thread_resolution": true,
+      "required_reviewers": []
+    }
+  },
+  {
+    "type": "required_status_checks",
+    "parameters": {
+      "required_status_checks": [{"context": "Verification", "integration_id": 15368}],
+      "strict_required_status_checks_policy": true
+    }
+  },
+  {"type": "deletion"},
+  {"type": "non_fast_forward"},
+  {"type": "update"}
+]
 ```
+
+Bypass policy:
+
+- `bypass_actors`: `[{"actor_id":5,"actor_type":"RepositoryRole","bypass_mode":"pull_request"}]`
+- `current_user_can_bypass`: `pull_requests_only`
+- Effect: repository administrator bypass is limited to pull-request context. Direct pushes to `main` still fail under the `update` rule.
 
 Direct push rejection proof:
 
 ```text
-remote: error: GH006: Protected branch update failed for refs/heads/main.
-remote:
+remote: error: GH013: Repository rule violations found for refs/heads/main.
+remote: Review all repository rules at https://github.com/mathaix/hookwire/rules?ref=refs%2Fheads%2Fmain
 remote: - Changes must be made through a pull request.
-remote:
 remote: - Required status check "Verification" is expected.
-! [remote rejected] HEAD -> main (protected branch hook declined)
+remote: - Cannot update this protected ref.
+! [remote rejected] HEAD -> main (push declined due to repository rule violations)
 ```
 
 ## Claude Review
@@ -123,4 +151,3 @@ Disposition:
 - Fixed the status check name by using workflow `CI` and job name `Verification`, then confirmed GitHub's required context is `Verification`.
 - Fixed supply-chain review findings by pinning GitHub-owned actions to current `v5` SHAs.
 - Fixed open-source governance gaps with `.nvmrc`, contributor docs, and documented administrator bypass policy.
-
