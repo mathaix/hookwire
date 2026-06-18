@@ -29,6 +29,7 @@ The multiuser data model lives in [docs/data-model.md](docs/data-model.md).
 The initial implementation backlog lives in [docs/issues](docs/issues/README.md).
 The sequenced implementation plan lives in [docs/implementation-plan.md](docs/implementation-plan.md).
 The verification and Claude review standard lives in [docs/verification.md](docs/verification.md).
+Contributor setup and pull request expectations live in [CONTRIBUTING.md](CONTRIBUTING.md).
 Local review artifacts can be stored under [docs/reviews](docs/reviews/README.md) until a PR system is connected.
 
 ## Open Source Readiness

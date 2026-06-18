@@ -13,4 +13,17 @@ test("README exposes the contributor foundation docs", async ({ page }) => {
   await expect(page.locator("body")).toContainText("docs/issues");
   await expect(page.locator("body")).toContainText("docs/implementation-plan.md");
   await expect(page.locator("body")).toContainText("docs/verification.md");
+  await expect(page.locator("body")).toContainText("CONTRIBUTING.md");
+});
+
+test("CONTRIBUTING documents local CI and main protection expectations", async ({ page }) => {
+  await page.goto(pathToFileURL(path.join(repoRoot, "CONTRIBUTING.md")).href);
+
+  await expect(page.locator("body")).toContainText("npm ci");
+  await expect(page.locator("body")).toContainText("npm run test:unit");
+  await expect(page.locator("body")).toContainText("npm run verify:docs");
+  await expect(page.locator("body")).toContainText("npm run test:e2e");
+  await expect(page.locator("body")).toContainText("direct pushes to `main` are blocked");
+  await expect(page.locator("body")).toContainText("required status checks");
+  await expect(page.locator("body")).toContainText("Administrator bypass is disabled by default");
 });

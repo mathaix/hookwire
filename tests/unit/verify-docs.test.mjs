@@ -7,6 +7,8 @@ import {
   buildIssueCompletenessReport,
   checkArchitectureDecisions,
   checkContributorReadiness,
+  checkGitHubActionsCi,
+  checkOpenSourceGovernance,
   findLegacyNameReferences,
   findMarkdownLinks,
   parseIssueIndex,
@@ -240,6 +242,96 @@ describe("issue 001 docs verification", () => {
     }
   });
 
+  it("checks the GitHub Actions CI workflow contract from issue 021", async () => {
+    const ci = await checkGitHubActionsCi(repoRoot);
+
+    expect(ci.workflowPath).toBe(".github/workflows/ci.yml");
+    expect(ci.missing).toEqual([]);
+    expect(ci.requiredSignals).toEqual([
+      "pull_request trigger",
+      "main push trigger",
+      "npm ci",
+      "Node version from .nvmrc",
+      "npm run test:unit",
+      "npm run verify:docs",
+      "npx playwright install --with-deps chromium",
+      "npm run test:e2e",
+      "Playwright failure artifact upload",
+      "Playwright browser cache",
+      "SHA-pinned GitHub actions",
+      "read-only contents permission"
+    ]);
+  });
+
+  it("reports missing GitHub Actions CI workflow requirements", async () => {
+    const fixture = await mkdtemp(path.join(tmpdir(), "hookwire-ci-missing-"));
+    try {
+      const ci = await checkGitHubActionsCi(fixture);
+
+      expect(ci.missing).toEqual([
+        "workflow file .github/workflows/ci.yml",
+        "pull_request trigger",
+        "main push trigger",
+        "npm ci",
+        "Node version from .nvmrc",
+        "npm run test:unit",
+        "npm run verify:docs",
+        "npx playwright install --with-deps chromium",
+        "npm run test:e2e",
+        "Playwright failure artifact upload",
+        "Playwright browser cache",
+        "SHA-pinned GitHub actions",
+        "read-only contents permission"
+      ]);
+    } finally {
+      await rm(fixture, { recursive: true, force: true });
+    }
+  });
+
+  it("checks open-source contribution docs and main protection guidance", async () => {
+    const governance = await checkOpenSourceGovernance(repoRoot);
+
+    expect(governance.missing).toEqual([]);
+    expect(governance.requiredStatements).toEqual([
+      { file: "README.md", text: "CONTRIBUTING.md" },
+      { file: ".nvmrc", text: "22" },
+      { file: "CONTRIBUTING.md", text: "Node.js 22" },
+      { file: "CONTRIBUTING.md", text: "npm ci" },
+      { file: "CONTRIBUTING.md", text: "npm run test:unit" },
+      { file: "CONTRIBUTING.md", text: "npm run verify:docs" },
+      { file: "CONTRIBUTING.md", text: "npm run test:e2e" },
+      { file: "CONTRIBUTING.md", text: "pull request" },
+      { file: "CONTRIBUTING.md", text: "direct pushes to `main` are blocked" },
+      { file: "CONTRIBUTING.md", text: "required status checks" },
+      { file: "CONTRIBUTING.md", text: "Administrator bypass is disabled by default" }
+    ]);
+  });
+
+  it("reports missing open-source contribution docs", async () => {
+    const fixture = await mkdtemp(path.join(tmpdir(), "hookwire-governance-missing-"));
+    try {
+      await writeFile(path.join(fixture, "README.md"), "Hookwire\n", "utf8");
+
+      const governance = await checkOpenSourceGovernance(fixture);
+
+      expect(governance.missing).toEqual([
+        { file: "README.md", text: "CONTRIBUTING.md" },
+        { file: ".nvmrc", text: "22" },
+        { file: "CONTRIBUTING.md", text: "Node.js 22" },
+        { file: "CONTRIBUTING.md", text: "npm ci" },
+        { file: "CONTRIBUTING.md", text: "npm run test:unit" },
+        { file: "CONTRIBUTING.md", text: "npm run verify:docs" },
+        { file: "CONTRIBUTING.md", text: "npm run test:e2e" },
+        { file: "CONTRIBUTING.md", text: "pull request" },
+        { file: "CONTRIBUTING.md", text: "direct pushes to `main` are blocked" },
+        { file: "CONTRIBUTING.md", text: "required status checks" },
+        { file: "CONTRIBUTING.md", text: "Administrator bypass is disabled by default" }
+      ]);
+    } finally {
+      await rm(fixture, { recursive: true, force: true });
+    }
+  });
+
   it("covers defensive file walking branches", async () => {
     const fixture = await mkdtemp(path.join(tmpdir(), "hookwire-walk-"));
     try {
@@ -298,5 +390,7 @@ describe("issue 001 docs verification", () => {
     expect(report.legacyName.matches).toEqual([]);
     expect(report.readiness.missing).toEqual([]);
     expect(report.decisions.missing).toEqual([]);
+    expect(report.ci.missing).toEqual([]);
+    expect(report.governance.missing).toEqual([]);
   });
 });

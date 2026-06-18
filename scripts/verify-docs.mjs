@@ -10,6 +10,76 @@ const DEFAULT_README_TARGETS = [
   "docs/verification.md"
 ];
 
+const CI_WORKFLOW_PATH = ".github/workflows/ci.yml";
+const CI_REQUIRED_SIGNALS = [
+  {
+    label: "pull_request trigger",
+    matches: (text) => text.includes("pull_request:")
+  },
+  {
+    label: "main push trigger",
+    matches: (text) => text.includes("push:") && text.includes("branches:") && text.includes("main")
+  },
+  {
+    label: "npm ci",
+    matches: (text) => text.includes("npm ci")
+  },
+  {
+    label: "Node version from .nvmrc",
+    matches: (text) => text.includes("node-version-file: .nvmrc")
+  },
+  {
+    label: "npm run test:unit",
+    matches: (text) => text.includes("npm run test:unit")
+  },
+  {
+    label: "npm run verify:docs",
+    matches: (text) => text.includes("npm run verify:docs")
+  },
+  {
+    label: "npx playwright install --with-deps chromium",
+    matches: (text) => text.includes("npx playwright install --with-deps chromium")
+  },
+  {
+    label: "npm run test:e2e",
+    matches: (text) => text.includes("npm run test:e2e")
+  },
+  {
+    label: "Playwright failure artifact upload",
+    matches: (text) => text.includes("actions/upload-artifact") && text.includes("playwright-report") && text.includes("test-results")
+  },
+  {
+    label: "Playwright browser cache",
+    matches: (text) => text.includes("actions/cache") && text.includes("~/.cache/ms-playwright")
+  },
+  {
+    label: "SHA-pinned GitHub actions",
+    matches: (text) =>
+      /actions\/checkout@[a-f0-9]{40}/.test(text) &&
+      /actions\/setup-node@[a-f0-9]{40}/.test(text) &&
+      /actions\/cache@[a-f0-9]{40}/.test(text) &&
+      /actions\/upload-artifact@[a-f0-9]{40}/.test(text)
+  },
+  {
+    label: "read-only contents permission",
+    matches: (text) => text.includes("permissions:") && text.includes("contents: read")
+  }
+];
+
+const GOVERNANCE_REQUIRED_STATEMENTS = [
+  { file: "README.md", text: "CONTRIBUTING.md" },
+  { file: ".nvmrc", text: "22" },
+  { file: "CONTRIBUTING.md", text: "Node.js 22" },
+  { file: "CONTRIBUTING.md", text: "npm ci" },
+  { file: "CONTRIBUTING.md", text: "npm run test:unit" },
+  { file: "CONTRIBUTING.md", text: "npm run verify:docs" },
+  { file: "CONTRIBUTING.md", text: "npm run test:e2e" },
+  { file: "CONTRIBUTING.md", text: "pull request" },
+  { file: "CONTRIBUTING.md", text: "direct pushes to `main` are blocked" },
+  { file: "CONTRIBUTING.md", text: "required status checks" },
+  { file: "CONTRIBUTING.md", text: "Administrator bypass is disabled by default" }
+];
+
 const ISSUE_LINK_PATTERN = /^\s*\d+\.\s+\[[^\]]+\]\(([^)]+)\)/gm;
 const MARKDOWN_LINK_PATTERN = /\[[^\]]+\]\(([^)#]+)(?:#[^)]+)?\)/g;
 
@@ -171,6 +241,40 @@ export async function checkArchitectureDecisions(repoRoot) {
   return { requiredStatements, missing };
 }
 
+export async function checkGitHubActionsCi(repoRoot) {
+  const workflowPath = CI_WORKFLOW_PATH;
+  const workflowFullPath = path.join(repoRoot, workflowPath);
+  const workflowExists = await exists(workflowFullPath);
+  const text = workflowExists ? await readFile(workflowFullPath, "utf8") : "";
+  const requiredSignals = CI_REQUIRED_SIGNALS.map((signal) => signal.label);
+  const missing = [];
+
+  if (!workflowExists) {
+    missing.push(`workflow file ${workflowPath}`);
+  }
+
+  for (const signal of CI_REQUIRED_SIGNALS) {
+    if (!signal.matches(text)) {
+      missing.push(signal.label);
+    }
+  }
+
+  return { workflowPath, requiredSignals, missing };
+}
+
+export async function checkOpenSourceGovernance(repoRoot) {
+  const files = {};
+  const requiredFiles = [...new Set(GOVERNANCE_REQUIRED_STATEMENTS.map((statement) => statement.file))];
+
+  for (const file of requiredFiles) {
+    files[file] = await readOptionalText(path.join(repoRoot, file));
+  }
+
+  const missing = GOVERNANCE_REQUIRED_STATEMENTS.filter((statement) => !files[statement.file].includes(statement.text));
+
+  return { requiredStatements: GOVERNANCE_REQUIRED_STATEMENTS, missing };
+}
+
 async function readOptionalText(filePath) {
   if (!(await exists(filePath))) {
     return "";
@@ -190,6 +294,8 @@ export async function runDocsVerification(repoRoot = path.resolve(".")) {
   });
   const readiness = await checkContributorReadiness(repoRoot);
   const decisions = await checkArchitectureDecisions(repoRoot);
+  const ci = await checkGitHubActionsCi(repoRoot);
+  const governance = await checkOpenSourceGovernance(repoRoot);
 
   return {
     ok:
@@ -197,12 +303,16 @@ export async function runDocsVerification(repoRoot = path.resolve(".")) {
       linkReport.missing.length === 0 &&
       legacyMatches.length === 0 &&
       readiness.missing.length === 0 &&
-      decisions.missing.length === 0,
+      decisions.missing.length === 0 &&
+      ci.missing.length === 0 &&
+      governance.missing.length === 0,
     issues: issueReport,
     links: linkReport,
     legacyName: { name: "Hookrail", matches: legacyMatches },
     readiness,
-    decisions
+    decisions,
+    ci,
+    governance
   };
 }
 
