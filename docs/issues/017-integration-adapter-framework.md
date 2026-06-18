@@ -23,3 +23,21 @@ Create a provider-neutral integration adapter framework for external approval de
 - Provider callbacks normalize into canonical approval decisions.
 - Failed deliveries can be retried or escalated.
 
+## Verification Constraints
+
+### Automated Checks
+
+- Run fake-provider tests for successful delivery, provider failure, retry, timeout, escalation, and callback normalization.
+- Run tests proving approval request core logic does not import provider-specific Slack/SMS/Jira/Linear code.
+- Run delivery-state tests proving delivery attempts are independent from approval decisions.
+- Run identity-mapping tests for provider user to Hookwire user resolution.
+
+### Proof Artifacts
+
+- Attach test output and fake-provider event traces.
+- Attach dependency or import-boundary proof showing provider-neutral core logic.
+- Attach database rows for request, delivery attempts, callback, and canonical decision.
+
+### Claude Review Gate
+
+- Complete the standard [Claude review gate](../verification.md#claude-review-gate) with a focus on provider abstraction, retry semantics, callback trust boundaries, and avoiding Slack coupling.

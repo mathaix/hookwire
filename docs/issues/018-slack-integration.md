@@ -25,3 +25,21 @@ Implement Slack as the first external approval integration.
 - Slack message state updates after approval or denial.
 - Slack failures do not block web inbox approvals.
 
+## Verification Constraints
+
+### Automated Checks
+
+- Run Slack adapter tests for channel delivery, user delivery, callback signature verification, approve action, deny action, unauthorized Slack user, stale interaction, and provider failure.
+- Run identity-mapping tests from Slack user id to Hookwire user id.
+- Run tests proving Slack decisions create canonical approval decision rows.
+- Run failure-isolation tests proving web inbox approvals still work when Slack delivery fails.
+
+### Proof Artifacts
+
+- Attach test output with sanitized Slack request and callback fixtures.
+- Attach message payload snapshots for initial request and post-decision update.
+- Attach database query output for delivery, identity mapping, decision, and audit event rows.
+
+### Claude Review Gate
+
+- Complete the standard [Claude review gate](../verification.md#claude-review-gate) with a focus on Slack signature validation, identity eligibility, failure isolation, and canonical decision mapping.

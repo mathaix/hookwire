@@ -12,6 +12,7 @@ The first runnable product should let a logged-in user onboard a project, regist
 - Architecture: [architecture.md](architecture.md)
 - Data model: [data-model.md](data-model.md)
 - Issue backlog: [issues/README.md](issues/README.md)
+- Verification standard: [verification.md](verification.md)
 
 ## Requirements Summary
 
@@ -370,6 +371,8 @@ Estimated effort: 2-3 weeks.
 - [ ] Local relay can operate safe local decisions without backend dependency.
 - [ ] External provider approvals use canonical decisions.
 - [ ] Audit trail covers all security-relevant changes.
+- [ ] Every closed issue has proof artifacts satisfying its verification constraints.
+- [ ] Every closed issue has a completed Claude review with findings resolved or dispositioned.
 
 ### Product Success
 
@@ -389,5 +392,4 @@ Estimated effort: 2-3 weeks.
 - Phase 6: Not started.
 - Phase 7: Not started.
 
-Latest update: 2026-06-18. Initial implementation plan created from the Hookwire PRD, architecture docs, data model, and issue backlog.
-
+Latest update: 2026-06-18. Added the verification standard and Claude review requirement to the implementation plan and issue backlog.

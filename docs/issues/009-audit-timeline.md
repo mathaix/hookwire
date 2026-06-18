@@ -22,3 +22,21 @@ Expose a clear audit trail for sessions, approvals, policy changes, and decision
 - Local override events can be represented.
 - Audit details never expose unredacted secrets.
 
+## Verification Constraints
+
+### Automated Checks
+
+- Run tests that create audit events for approval creation, decision, policy change, route change, key registration, key revocation, session claim, and local override.
+- Run filter tests by project, session, approval request, policy, and user.
+- Run redaction tests proving secret fixture values never appear in audit details.
+- Run append-only behavior tests or migration constraints preventing unsafe mutation where applicable.
+
+### Proof Artifacts
+
+- Attach test output and sample audit event rows.
+- Attach screenshots of the audit timeline, filters, and event detail.
+- Attach proof that redacted metadata is displayed instead of raw sensitive values.
+
+### Claude Review Gate
+
+- Complete the standard [Claude review gate](../verification.md#claude-review-gate) with a focus on audit completeness, redaction, actor attribution, and tamper-resistance gaps.

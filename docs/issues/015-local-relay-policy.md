@@ -23,3 +23,21 @@ Implement the local relay policy cache and fast evaluator for safe local decisio
 - Unknown actions follow the configured default decision.
 - Evaluator returns matched rule, decision, risk, and route metadata.
 
+## Verification Constraints
+
+### Automated Checks
+
+- Run unit tests for allow, deny, ask, route, default decision, session scope, and unmatched actions.
+- Run tests proving safe allow/deny decisions succeed with backend/network disabled.
+- Run policy cache update tests with version changes and invalid bundle rejection.
+- Run benchmark tests for safe allow, local deny, and cached policy evaluation latency.
+
+### Proof Artifacts
+
+- Attach unit test and benchmark output.
+- Attach sample policy bundle and evaluator result snapshots.
+- Attach network-mock assertion output, disabled-network test output, or trace output proving backend access is not attempted for safe local decisions.
+
+### Claude Review Gate
+
+- Complete the standard [Claude review gate](../verification.md#claude-review-gate) with a focus on local hot-path performance, deterministic policy matching, and backend independence.

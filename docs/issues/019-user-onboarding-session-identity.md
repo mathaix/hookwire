@@ -48,3 +48,22 @@ The local relay should authenticate as an installation credential. It should not
 
 Ed25519 is the recommended default key algorithm for v1.
 
+## Verification Constraints
+
+### Automated Checks
+
+- Run onboarding tests for create organization, join organization, create project, select tools, create device-code session, register installation, and start session.
+- Run tests proving sessions inherit organization, project, agent tool, and installation from verified relay credentials.
+- Run tests for nullable `started_by_user_id`, manual claim, reassignment, and service-owned sessions.
+- Run tests proving approval decisions record the approver separately from session owner and session claimant.
+
+### Proof Artifacts
+
+- Attach end-to-end onboarding test output with seeded user, project, tool, installation, and session ids.
+- Attach screenshots of web onboarding states.
+- Attach database query output showing user -> membership -> project membership -> tool -> installation -> session.
+- Attach audit row output for session claim and reassignment.
+
+### Claude Review Gate
+
+- Complete the standard [Claude review gate](../verification.md#claude-review-gate) with a focus on identity association, spoofing assumptions, owner vs approver separation, and onboarding recovery paths.
