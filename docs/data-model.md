@@ -32,6 +32,17 @@ The schema should support teams from the start, even if v1 ships with a simple w
 - created_at
 - updated_at
 
+### project_memberships
+
+- id
+- organization_id
+- project_id
+- user_id
+- role
+- status
+- created_at
+- updated_at
+
 ## Projects and Agents
 
 ### projects
@@ -47,34 +58,84 @@ The schema should support teams from the start, even if v1 ships with a simple w
 - created_at
 - updated_at
 
-### agent_installations
+### agent_tools
 
 - id
 - organization_id
 - project_id
 - agent_type
-- machine_fingerprint
-- relay_version
-- last_seen_at
+- display_name
+- enabled
+- created_by_user_id
 - created_at
 - updated_at
 
 Supported `agent_type` values should include `claude`, `codex`, and `openclaw`.
+
+### agent_installations
+
+- id
+- organization_id
+- project_id
+- agent_tool_id
+- agent_type
+- registered_by_user_id
+- owner_user_id
+- machine_fingerprint
+- relay_version
+- status
+- last_seen_at
+- created_at
+- updated_at
+
+`registered_by_user_id` records who completed onboarding. `owner_user_id` is nullable for shared machines, CI, or service-owned installations.
+
+### installation_credentials
+
+- id
+- organization_id
+- project_id
+- agent_installation_id
+- token_hash
+- last_used_at
+- expires_at
+- revoked_at
+- created_at
+- updated_at
 
 ### agent_sessions
 
 - id
 - organization_id
 - project_id
+- agent_tool_id
 - agent_installation_id
 - agent_type
 - external_session_id
+- started_by_user_id
+- claimed_by_user_id
+- local_username_hash
 - branch
 - commit_sha
 - status
 - started_at
 - ended_at
 - last_seen_at
+
+`started_by_user_id` is the best-known human owner from onboarding or explicit local login. `claimed_by_user_id` is set when a web user manually claims a session. Both are nullable and must be tracked in audit events when changed.
+
+### agent_session_identities
+
+- id
+- organization_id
+- agent_session_id
+- user_id
+- source
+- confidence
+- metadata_json
+- created_at
+
+Example `source` values: `installation_owner`, `cli_login`, `manual_claim`, `git_author`, `external_mapping`, `service_account`.
 
 ### hook_events
 
@@ -88,6 +149,24 @@ Supported `agent_type` values should include `claude`, `codex`, and `openclaw`.
 - risk_level
 - payload_redacted
 - created_at
+
+## Onboarding
+
+### onboarding_sessions
+
+- id
+- organization_id
+- user_id
+- project_id
+- status
+- device_code_hash
+- selected_agent_types
+- expires_at
+- completed_at
+- created_at
+- updated_at
+
+Used by web-to-CLI login or device-code setup. Completion registers `agent_tools`, `agent_installations`, and `installation_credentials`.
 
 ## Policy and Routing
 
@@ -222,6 +301,8 @@ Example `provider` values: `slack`, `twilio`, `jira`, `linear`, `github`, `email
 - id
 - organization_id
 - project_id
+- agent_tool_id
+- agent_installation_id
 - agent_session_id
 - hook_event_id
 - status
@@ -276,4 +357,3 @@ Example `provider` values: `slack`, `twilio`, `jira`, `linear`, `github`, `email
 - entity_id
 - metadata_json
 - created_at
-

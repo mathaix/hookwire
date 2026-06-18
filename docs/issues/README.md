@@ -21,6 +21,7 @@ This backlog is written as GitHub-ready issue specs. There is no remote configur
 - `area:integration`
 - `area:audit`
 - `area:security`
+- `area:onboarding`
 - `type:feature`
 - `type:design`
 - `type:infra`
@@ -48,4 +49,4 @@ This backlog is written as GitHub-ready issue specs. There is no remote configur
 16. [Local redaction pipeline](016-local-redaction.md)
 17. [Integration adapter framework](017-integration-adapter-framework.md)
 18. [Slack integration adapter](018-slack-integration.md)
-
+19. [User onboarding and session identity association](019-user-onboarding-session-identity.md)
