@@ -303,7 +303,8 @@ describe("issue 001 docs verification", () => {
       { file: "CONTRIBUTING.md", text: "pull request" },
       { file: "CONTRIBUTING.md", text: "direct pushes to `main` are blocked" },
       { file: "CONTRIBUTING.md", text: "required status checks" },
-      { file: "CONTRIBUTING.md", text: "Administrator bypass is disabled by default" }
+      { file: "CONTRIBUTING.md", text: "Direct-push bypass is disabled" },
+      { file: "CONTRIBUTING.md", text: "pull-request bypass" }
     ]);
   });
 
@@ -325,7 +326,8 @@ describe("issue 001 docs verification", () => {
         { file: "CONTRIBUTING.md", text: "pull request" },
         { file: "CONTRIBUTING.md", text: "direct pushes to `main` are blocked" },
         { file: "CONTRIBUTING.md", text: "required status checks" },
-        { file: "CONTRIBUTING.md", text: "Administrator bypass is disabled by default" }
+        { file: "CONTRIBUTING.md", text: "Direct-push bypass is disabled" },
+        { file: "CONTRIBUTING.md", text: "pull-request bypass" }
       ]);
     } finally {
       await rm(fixture, { recursive: true, force: true });

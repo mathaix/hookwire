@@ -28,7 +28,7 @@ The expected required status check context is:
 
 GitHub may display that job under the `CI` workflow in the Actions UI.
 
-Administrator bypass is disabled by default. If an emergency bypass is ever enabled, maintainers must document the reason, scope, and follow-up verification in the related issue or pull request before considering the work complete.
+Direct-push bypass is disabled. Repository administrators may only use the configured pull-request bypass to complete PR-based merges; any emergency broadening of bypass permissions must be temporary and documented in the related issue or pull request before considering the work complete.
 
 Do not merge a functional, runtime, security-sensitive, or code-bearing issue until its Claude review findings are resolved or dispositioned according to [docs/verification.md](docs/verification.md).
 

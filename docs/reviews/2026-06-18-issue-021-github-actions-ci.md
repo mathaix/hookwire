@@ -108,8 +108,9 @@ Verified active rules for `main`:
 
 Bypass policy:
 
-- `bypass_actors`: `[]`
-- `current_user_can_bypass`: `never`
+- `bypass_actors`: `[{"actor_id":5,"actor_type":"RepositoryRole","bypass_mode":"pull_request"}]`
+- `current_user_can_bypass`: `pull_requests_only`
+- Effect: repository administrator bypass is limited to pull-request context. Direct pushes to `main` still fail under the `update` rule.
 
 Direct push rejection proof:
 
