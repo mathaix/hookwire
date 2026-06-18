@@ -28,3 +28,7 @@ test("CONTRIBUTING documents local CI and main protection expectations", async (
   await expect(page.locator("body")).toContainText("Verification");
   await expect(page.locator("body")).toContainText("Administrator bypass is disabled by default");
 });
+
+test("temporary failure proof", async () => {
+  expect(false).toBe(true);
+});
