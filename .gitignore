@@ -1,0 +1,27 @@
+# dependencies
+node_modules/
+
+# build outputs
+dist/
+build/
+.next/
+out/
+
+# environment
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+.logs/
+
+# local data
+*.sqlite
+*.sqlite3
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
+
