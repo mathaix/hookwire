@@ -4,7 +4,14 @@ export default defineConfig({
   testDir: "tests/e2e",
   reporter: [["list"], ["html", { open: "never", outputFolder: "playwright-report" }]],
   retries: process.env.CI ? 2 : 0,
+  webServer: {
+    command: "npm run web:e2e-server",
+    url: "http://127.0.0.1:3000",
+    reuseExistingServer: !process.env.CI,
+    timeout: 120_000
+  },
   use: {
+    baseURL: "http://127.0.0.1:3000",
     trace: "on-first-retry"
   },
   projects: [

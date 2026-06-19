@@ -18,6 +18,15 @@ The first runnable milestone is the web app itself. Slack, SMS, Jira, Linear, em
 
 The initial Postgres schema and migration runner live in [packages/db](packages/db/README.md). For local schema work, start Postgres with Docker Compose and run the migration commands from the repository root.
 
+The initial web control plane shell lives in `apps/web`.
+
+```sh
+npm run web:lint
+npm run web:typecheck
+npm run web:build
+npm run test:e2e
+```
+
 ## Architecture Decisions
 
 - Postgres is the source of truth for the hosted or self-hosted control plane.

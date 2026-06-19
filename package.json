@@ -9,6 +9,12 @@
     "test": "vitest run --coverage",
     "test:unit": "vitest run --coverage",
     "test:e2e": "playwright test",
+    "web:build": "next build apps/web",
+    "web:dev": "next dev apps/web",
+    "web:e2e-server": "next build apps/web && next start apps/web --hostname 127.0.0.1 --port 3000",
+    "web:lint": "node apps/web/lint.mjs",
+    "web:start": "next start apps/web",
+    "web:typecheck": "tsc --project apps/web/tsconfig.json --noEmit",
     "verify:docs": "node scripts/verify-docs.mjs"
   },
   "devDependencies": {
@@ -16,5 +22,14 @@
     "@vitest/coverage-v8": "^4.0.15",
     "pg": "^8.21.0",
     "vitest": "^4.0.15"
+  },
+  "dependencies": {
+    "@types/node": "^25.9.3",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "next": "^16.2.9",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "typescript": "^6.0.3"
   }
 }
