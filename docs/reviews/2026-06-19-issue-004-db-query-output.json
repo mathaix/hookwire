@@ -1,0 +1,67 @@
+{
+  "seeded_request_ids": {
+    "approved": "32739987-8ca4-4560-b97f-7c52537e4a03",
+    "denied": "335174b6-0ffc-4704-b779-da5346263fc8"
+  },
+  "approval_requests": [
+    {
+      "id": "32739987-8ca4-4560-b97f-7c52537e4a03",
+      "status": "approved",
+      "risk_level": "high",
+      "requested_by_agent": "codex-7f31",
+      "action_summary": "APR-1042 Apply migration and write project settings",
+      "redacted_payload_json": {
+        "token": "[redacted]",
+        "command": "npm run db:migrate"
+      }
+    },
+    {
+      "id": "335174b6-0ffc-4704-b779-da5346263fc8",
+      "status": "denied",
+      "risk_level": "medium",
+      "requested_by_agent": "codex-7f31",
+      "action_summary": "APR-1041 Patch local relay config",
+      "redacted_payload_json": {
+        "path": ".hookwire/relay.json"
+      }
+    }
+  ],
+  "approval_decisions": [
+    {
+      "approval_request_id": "335174b6-0ffc-4704-b779-da5346263fc8",
+      "decision": "denied",
+      "scope": "once",
+      "source": "web",
+      "reason": "Relay config patch touches protected routing"
+    },
+    {
+      "approval_request_id": "32739987-8ca4-4560-b97f-7c52537e4a03",
+      "decision": "approved",
+      "scope": "once",
+      "source": "web",
+      "reason": null
+    }
+  ],
+  "audit_events": [
+    {
+      "event_type": "approval.approved",
+      "entity_type": "approval_request",
+      "entity_id": "32739987-8ca4-4560-b97f-7c52537e4a03",
+      "metadata_json": {
+        "routeId": "2610ade6-7f44-4ecb-bd9b-ed13945fcdfa",
+        "decisionId": "adb565aa-77e9-48b9-b5c4-b308f6bdaa84",
+        "reasonRequired": false
+      }
+    },
+    {
+      "event_type": "approval.denied",
+      "entity_type": "approval_request",
+      "entity_id": "335174b6-0ffc-4704-b779-da5346263fc8",
+      "metadata_json": {
+        "routeId": "2610ade6-7f44-4ecb-bd9b-ed13945fcdfa",
+        "decisionId": "9adf9ea8-f334-40f9-a5bc-ad6d2fd2e15a",
+        "reasonRequired": true
+      }
+    }
+  ]
+}

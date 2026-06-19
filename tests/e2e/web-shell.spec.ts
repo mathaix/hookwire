@@ -17,9 +17,9 @@ test("root opens the operational dashboard instead of a marketing page", async (
   await expect(page.getByTestId("topbar")).toContainText("Project");
   await expect(page.getByRole("navigation", { name: "Primary" })).toContainText("Hookwire");
   await expect(page.getByRole("heading", { name: "Pending approvals" })).toBeVisible();
-  await expect(page.getByRole("table", { name: "Pending approval requests" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Approve selected approval" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Deny selected approval" })).toBeVisible();
+  await expect(page.getByRole("table", { name: "Approval inbox requests" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Approve APR-1042 once" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Deny APR-1042 once" })).toBeVisible();
   await expect(page.getByText("Get started with Hookwire")).toHaveCount(0);
 });
 
@@ -53,8 +53,8 @@ test("mobile layout keeps approval review usable", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "Pending approvals" })).toBeVisible();
   await expect(page.getByTestId("approval-list")).toBeVisible();
   await expect(page.getByTestId("approval-detail")).toBeVisible();
-  await expect(page.getByRole("button", { name: "Approve selected approval" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Deny selected approval" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Approve APR-1042 once" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Deny APR-1042 once" })).toBeVisible();
 });
 
 test("section tables keep dense data scrollable on mobile", async ({ page }) => {

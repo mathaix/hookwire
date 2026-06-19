@@ -2,7 +2,7 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    include: ["tests/unit/**/*.test.mjs"],
+    include: ["tests/unit/**/*.test.mjs", "tests/unit/**/*.test.ts"],
     coverage: {
       provider: "v8",
       reporter: ["text", "json-summary"],
@@ -12,8 +12,8 @@ export default defineConfig({
         lines: 90,
         statements: 90
       },
-      include: ["scripts/**/*.mjs"]
+      // Docker-backed proof scripts are verified by explicit npm proof commands, not unit coverage.
+      include: ["scripts/verify-docs.mjs", "apps/web/app/approvals/**/*.ts"]
     }
   }
 });
-
