@@ -1,5 +1,10 @@
-import { SectionPage } from "../section-page";
+import { AppShell } from "../app-shell";
+import { AuditTimeline } from "./audit-timeline";
 
 export default function AuditPage() {
-  return <SectionPage active="audit" description="Track approval, session, route, and identity changes." title="Audit timeline" />;
+  return (
+    <AppShell active="audit" description="Track approval, session, route, and identity changes." title="Audit timeline">
+      <AuditTimeline />
+    </AppShell>
+  );
 }

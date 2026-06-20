@@ -849,6 +849,86 @@ td span {
   font-size: 12px;
 }
 
+.audit-filters {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.audit-filters label {
+  display: grid;
+  gap: 6px;
+}
+
+.audit-filters label span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.audit-filters select {
+  background: var(--panel-soft);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text);
+  min-height: 36px;
+  min-width: 0;
+  padding: 0 10px;
+  width: 100%;
+}
+
+.audit-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(520px, 1fr) minmax(420px, 0.85fr);
+}
+
+.audit-list {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.audit-event {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: inherit;
+  cursor: pointer;
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  text-align: left;
+  width: 100%;
+}
+
+.audit-event strong,
+.audit-event span,
+.audit-event small {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.audit-event span,
+.audit-event small {
+  color: var(--muted);
+}
+
+.audit-detail pre {
+  background: #111820;
+  border-radius: 8px;
+  color: #f8fafc;
+  font-size: 12px;
+  margin: 16px 0 0;
+  max-height: 420px;
+  overflow: auto;
+  padding: 14px;
+  white-space: pre-wrap;
+}
+
 .session-filters {
   align-items: end;
   display: grid;
@@ -1028,12 +1108,14 @@ td span {
   .policy-output-grid,
   .route-grid,
   .route-builder-grid,
+  .audit-grid,
   .session-grid,
   .session-metrics,
   .detail-list-grid {
     grid-template-columns: 1fr;
   }
 
+  .audit-filters,
   .session-filters {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1059,6 +1141,7 @@ td span {
 }
 
 @media (max-width: 520px) {
+  .audit-filters,
   .session-filters {
     grid-template-columns: 1fr;
   }

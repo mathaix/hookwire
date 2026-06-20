@@ -496,8 +496,7 @@ describe("multiuser database schema", () => {
         ["approval_decisions", "reason = 'leak'", seeded.decisionB],
         ["routes", "updated_at = now()", seeded.routeB],
         ["route_targets", "updated_at = now()", seeded.routeTargetB],
-        ["integrations", "updated_at = now()", seeded.integrationB],
-        ["audit_events", "metadata_json = '{\"leak\":true}'::jsonb", seeded.auditEventB]
+        ["integrations", "updated_at = now()", seeded.integrationB]
       ];
 
       for (const [table, setClause, id] of updateCases) {
@@ -507,14 +506,26 @@ describe("multiuser database schema", () => {
 
       const deleteCases = [
         ["approval_deliveries", seeded.deliveryB],
-        ["approval_decisions", seeded.decisionB],
-        ["audit_events", seeded.auditEventB]
+        ["approval_decisions", seeded.decisionB]
       ];
 
       for (const [table, id] of deleteCases) {
         const { rowCount } = await client.query(`delete from ${table} where id = $1`, [id]);
         expect(rowCount).toBe(0);
       }
+
+      await expectQueryRejected(
+        client,
+        "update audit_events set metadata_json = '{\"leak\":true}'::jsonb where id = $1",
+        [seeded.auditEventB],
+        /permission denied/i
+      );
+      await expectQueryRejected(
+        client,
+        "delete from audit_events where id = $1",
+        [seeded.auditEventB],
+        /permission denied/i
+      );
 
       await expectQueryRejected(
         client,

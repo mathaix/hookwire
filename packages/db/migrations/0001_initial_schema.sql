@@ -626,5 +626,6 @@ grant usage on schema public to hookwire_app;
 grant usage on schema hookwire to hookwire_app;
 grant select, insert, update, delete on all tables in schema public to hookwire_app;
 revoke insert, update, delete on organizations, users from hookwire_app;
+revoke update, delete on audit_events from hookwire_app;
 revoke all on schema_migrations from hookwire_app;
 grant execute on all functions in schema hookwire to hookwire_app;

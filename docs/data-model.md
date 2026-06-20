@@ -179,6 +179,8 @@ Used to prevent replay of signed relay requests within the accepted clock-skew w
 - metadata_json
 - created_at
 
+Audit rows are append-only for the application role. `metadata_json` should contain redacted details only; UI and service reads also redact sensitive keys and token-shaped values before display.
+
 Example `source` values: `installation_owner`, `cli_login`, `manual_claim`, `git_author`, `external_mapping`, `service_account`.
 
 ### hook_events

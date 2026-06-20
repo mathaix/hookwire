@@ -1,0 +1,132 @@
+{
+  "issue": "009-audit-timeline",
+  "generatedAt": "2026-06-20T16:11:32.317Z",
+  "eventTypes": [
+    "approval.requested",
+    "approval.approved",
+    "policy.changed",
+    "route.changed",
+    "key.registered",
+    "key.revoked",
+    "session.claimed",
+    "local_override.used"
+  ],
+  "queryProof": {
+    "events": [
+      {
+        "id": "ed0fa6bb-464c-4b42-8792-aee9218570a0",
+        "event_type": "approval.approved",
+        "entity_type": "approval_decision",
+        "actor_type": "user",
+        "actor_name": "Maya",
+        "project_name": "hookwire/web",
+        "metadata_json": {
+          "reason": "Reviewed migration"
+        }
+      },
+      {
+        "id": "fbbf7ba8-eb4d-4588-bc2c-aeb2b7d05311",
+        "event_type": "approval.requested",
+        "entity_type": "approval_request",
+        "actor_type": "relay",
+        "actor_name": null,
+        "project_name": "hookwire/web",
+        "metadata_json": {
+          "payload": "[REDACTED]",
+          "actionSummary": "Write route config"
+        }
+      },
+      {
+        "id": "c0001c69-55ec-4fd6-a446-f2f1c0a24ea9",
+        "event_type": "key.registered",
+        "entity_type": "user_device_key",
+        "actor_type": "user",
+        "actor_name": "Maya",
+        "project_name": "hookwire/web",
+        "metadata_json": {
+          "privateKey": "[REDACTED]",
+          "publicKeyFingerprint": "SHA256:audit-key"
+        }
+      },
+      {
+        "id": "03c49308-0260-46ab-98b8-f8934144fed7",
+        "event_type": "key.revoked",
+        "entity_type": "user_device_key",
+        "actor_type": "user",
+        "actor_name": "Maya",
+        "project_name": "hookwire/web",
+        "metadata_json": {
+          "revocationReason": "Device retired"
+        }
+      },
+      {
+        "id": "cc64dbcd-aa87-440e-ac59-d5b1f7d6bf11",
+        "event_type": "local_override.used",
+        "entity_type": "local_override",
+        "actor_type": "user",
+        "actor_name": "Maya",
+        "project_name": "hookwire/web",
+        "metadata_json": {
+          "reason": "Emergency unblock",
+          "command": "deploy --token [REDACTED]",
+          "githubToken": "[REDACTED]",
+          "authorization": "[REDACTED]"
+        }
+      },
+      {
+        "id": "c62cb0dc-cf39-4def-b02d-953fbd06b77b",
+        "event_type": "policy.changed",
+        "entity_type": "policy",
+        "actor_type": "user",
+        "actor_name": "Sam",
+        "project_name": "hookwire/web",
+        "metadata_json": {
+          "change": "enabled route rule"
+        }
+      },
+      {
+        "id": "a764a8eb-5d68-4924-9209-cc6c30587e6b",
+        "event_type": "route.changed",
+        "entity_type": "route",
+        "actor_type": "user",
+        "actor_name": "Sam",
+        "project_name": "hookwire/web",
+        "metadata_json": {
+          "targetType": "web_inbox"
+        }
+      },
+      {
+        "id": "14eeb4ad-f035-4b09-be01-7e2dad5c90e8",
+        "event_type": "session.claimed",
+        "entity_type": "agent_session",
+        "actor_type": "user",
+        "actor_name": "Maya",
+        "project_name": "hookwire/web",
+        "metadata_json": {
+          "source": "manual_claim"
+        }
+      }
+    ],
+    "globexDirectRlsProbe": [],
+    "appendOnly": {
+      "updateDenied": {
+        "denied": true,
+        "code": "42501",
+        "message": "permission denied for table audit_events"
+      },
+      "deleteDenied": {
+        "denied": true,
+        "code": "42501",
+        "message": "permission denied for table audit_events"
+      }
+    }
+  },
+  "screenshotProof": {
+    "consoleMessages": [],
+    "detailScreenshot": "/Users/mantiz/Documents/hookwire/docs/reviews/2026-06-20-issue-009-audit-detail.png",
+    "filtersScreenshot": "/Users/mantiz/Documents/hookwire/docs/reviews/2026-06-20-issue-009-audit-filters.png",
+    "rawSecretHits": [],
+    "redactedVisible": true,
+    "timelineScreenshot": "/Users/mantiz/Documents/hookwire/docs/reviews/2026-06-20-issue-009-audit-timeline.png"
+  }
+}
