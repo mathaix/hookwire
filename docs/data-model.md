@@ -246,6 +246,8 @@ Used by web-to-CLI login or device-code setup. Completion registers `agent_tools
 - created_at
 - updated_at
 
+Rules are evaluated by ascending `priority`; priorities are unique within a policy. `decision` is one of `allow`, `deny`, `ask`, or `route`. Route decisions must reference a same-organization `route_id`; non-route decisions must not carry a `route_id`. `matcher_json` stores command prefix, command pattern, operation, path pattern, and risk tag matchers. Local overrides can require a reason and can be scoped by `max_scope` (`once`, `session`, or `project`).
+
 ### routes
 
 - id

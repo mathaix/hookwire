@@ -607,6 +607,173 @@ td span {
   font-size: 12px;
 }
 
+.policy-grid,
+.policy-builder-grid,
+.policy-output-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.policy-grid {
+  grid-template-columns: minmax(240px, 0.35fr) minmax(640px, 1fr);
+}
+
+.policy-builder-grid,
+.policy-output-grid {
+  grid-template-columns: minmax(380px, 0.8fr) minmax(360px, 1fr);
+}
+
+.policy-rules-panel table {
+  min-width: 840px;
+  table-layout: fixed;
+}
+
+.policy-rules-panel th:nth-child(1) {
+  width: 10%;
+}
+
+.policy-rules-panel th:nth-child(2) {
+  width: 24%;
+}
+
+.policy-rules-panel th:nth-child(3) {
+  width: 32%;
+}
+
+.policy-rules-panel th:nth-child(4) {
+  width: 14%;
+}
+
+.policy-rules-panel th:nth-child(5) {
+  width: 20%;
+}
+
+.rule-form,
+.simulator-form {
+  display: grid;
+  gap: 10px;
+}
+
+.rule-form {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.simulator-form {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.rule-form label,
+.simulator-form label {
+  display: grid;
+  gap: 6px;
+}
+
+.rule-form label span,
+.simulator-form label span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.rule-form input,
+.rule-form select,
+.simulator-form input,
+.simulator-form select {
+  background: var(--panel-soft);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text);
+  min-height: 36px;
+  min-width: 0;
+  padding: 0 10px;
+  width: 100%;
+}
+
+.rule-form .check-row {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.check-row input {
+  height: 16px;
+  width: 16px;
+}
+
+.primary-action,
+.secondary-action,
+.order-actions button {
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+  min-height: 36px;
+  padding: 0 12px;
+}
+
+.primary-action {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.secondary-action,
+.order-actions button {
+  background: white;
+  color: var(--text);
+}
+
+.order-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.order-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.decision-pill {
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 8px;
+}
+
+.decision-allow {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.decision-ask,
+.decision-route {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.decision-deny {
+  background: var(--red-soft);
+  color: var(--red);
+}
+
+.policy-bundle-panel pre {
+  background: #111820;
+  border-radius: 7px;
+  color: #e6edf3;
+  font-size: 12px;
+  line-height: 1.45;
+  margin: 0;
+  max-height: 520px;
+  overflow: auto;
+  padding: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
 .session-filters {
   align-items: end;
   display: grid;
@@ -781,6 +948,9 @@ td span {
   .dashboard-grid,
   .operations-grid,
   .settings-grid,
+  .policy-grid,
+  .policy-builder-grid,
+  .policy-output-grid,
   .session-grid,
   .session-metrics,
   .detail-list-grid {
@@ -789,6 +959,11 @@ td span {
 
   .session-filters {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rule-form,
+  .simulator-form {
+    grid-template-columns: 1fr;
   }
 
   .approval-list .table-wrap {

@@ -17,6 +17,7 @@ export default defineConfig({
         "scripts/verify-docs.mjs",
         "apps/web/app/approvals/**/*.ts",
         "apps/web/app/api/approvals/**/*.ts",
+        "apps/web/app/policies/**/*.ts",
         "apps/web/app/sessions/**/*.ts"
       ]
     }

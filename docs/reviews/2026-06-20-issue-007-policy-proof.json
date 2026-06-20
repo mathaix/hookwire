@@ -1,0 +1,117 @@
+{
+  "issue": "007-policy-rule-builder",
+  "generatedAt": "2026-06-20T02:07:14.632Z",
+  "seededPolicyId": "73b9fb00-7d8b-45e9-8670-c55f9a5c3ad0",
+  "routeIds": {
+    "onCall": "17980c67-ba21-486e-8045-918993312625"
+  },
+  "queryProof": {
+    "acme": {
+      "policies": [
+        {
+          "id": "73b9fb00-7d8b-45e9-8670-c55f9a5c3ad0",
+          "name": "Deploy guard",
+          "version": 5,
+          "status": "active",
+          "default_decision": "ask"
+        }
+      ],
+      "rules": [
+        {
+          "name": "Route guarded config writes",
+          "priority": 10,
+          "matcher_json": {
+            "riskTag": "medium",
+            "operation": "write_file",
+            "pathPattern": ".hookwire/**"
+          },
+          "decision": "route",
+          "route_id": "17980c67-ba21-486e-8045-918993312625",
+          "local_override_allowed": true,
+          "require_override_reason": true,
+          "max_scope": "session"
+        },
+        {
+          "name": "Deny destructive deletes",
+          "priority": 20,
+          "matcher_json": {
+            "riskTag": "critical",
+            "operation": "shell",
+            "commandPattern": "^rm\\s+-rf\\s+/"
+          },
+          "decision": "deny",
+          "route_id": null,
+          "local_override_allowed": false,
+          "require_override_reason": false,
+          "max_scope": null
+        }
+      ],
+      "routes": [
+        {
+          "id": "17980c67-ba21-486e-8045-918993312625",
+          "name": "On-call reviewers"
+        },
+        {
+          "id": "ed7638d0-d579-42af-aa5f-062cb1d9605d",
+          "name": "Web inbox"
+        }
+      ],
+      "viewerEditProbe": [
+        {
+          "organization_role": "viewer",
+          "project_role": "viewer"
+        }
+      ],
+      "globexDirectRlsProbe": [],
+      "serializedBundle": {
+        "schemaVersion": 1,
+        "policyId": "73b9fb00-7d8b-45e9-8670-c55f9a5c3ad0",
+        "policyName": "Deploy guard",
+        "version": 5,
+        "defaultDecision": "ask",
+        "routes": [
+          {
+            "id": "17980c67-ba21-486e-8045-918993312625",
+            "name": "On-call reviewers"
+          }
+        ],
+        "rules": [
+          {
+            "name": "Route guarded config writes",
+            "priority": 10,
+            "matcher": {
+              "riskTag": "medium",
+              "operation": "write_file",
+              "pathPattern": ".hookwire/**"
+            },
+            "decision": "route",
+            "routeId": "17980c67-ba21-486e-8045-918993312625",
+            "localOverrideAllowed": true,
+            "requireOverrideReason": true,
+            "maxScope": "session"
+          },
+          {
+            "name": "Deny destructive deletes",
+            "priority": 20,
+            "matcher": {
+              "riskTag": "critical",
+              "operation": "shell",
+              "commandPattern": "^rm\\s+-rf\\s+/"
+            },
+            "decision": "deny",
+            "routeId": null,
+            "localOverrideAllowed": false,
+            "requireOverrideReason": false,
+            "maxScope": null
+          }
+        ]
+      }
+    }
+  },
+  "screenshotProof": {
+    "consoleMessages": [],
+    "creationScreenshot": "/Users/mantiz/Documents/hookwire/docs/reviews/2026-06-20-issue-007-rule-creation.png",
+    "orderingScreenshot": "/Users/mantiz/Documents/hookwire/docs/reviews/2026-06-20-issue-007-rule-ordering.png",
+    "routeOverrideScreenshot": "/Users/mantiz/Documents/hookwire/docs/reviews/2026-06-20-issue-007-route-override.png"
+  }
+}

@@ -12,6 +12,7 @@
     "proof:issue004:db": "node scripts/proof-issue-004-db.mjs",
     "proof:issue005:api": "node scripts/proof-issue-005-api.mjs",
     "proof:issue006:sessions": "node scripts/proof-issue-006-sessions.mjs",
+    "proof:issue007:policies": "node scripts/proof-issue-007-policies.mjs",
     "web:build": "next build apps/web",
     "web:dev": "next dev apps/web",
     "web:e2e-server": "next build apps/web && next start apps/web --hostname 127.0.0.1 --port 3000",

@@ -317,7 +317,10 @@ create table policy_rules (
   updated_at timestamptz not null default now(),
   constraint policy_rules_policy_same_org_fk foreign key (organization_id, policy_id) references policies (organization_id, id) on delete cascade,
   constraint policy_rules_route_same_org_fk foreign key (organization_id, route_id) references routes (organization_id, id),
-  constraint policy_rules_decision_check check (decision in ('allow', 'deny', 'ask')),
+  constraint policy_rules_decision_check check (decision in ('allow', 'deny', 'ask', 'route')),
+  constraint policy_rules_route_decision_check check (decision <> 'route' or route_id is not null),
+  constraint policy_rules_non_route_route_check check (decision = 'route' or route_id is null),
+  constraint policy_rules_scope_check check (max_scope is null or max_scope in ('once', 'session', 'project')),
   constraint policy_rules_priority_unique unique (organization_id, policy_id, priority),
   constraint policy_rules_organization_id_unique unique (organization_id, id)
 );

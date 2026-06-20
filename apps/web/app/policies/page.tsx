@@ -1,5 +1,10 @@
-import { SectionPage } from "../section-page";
+import { AppShell } from "../app-shell";
+import { PolicyBuilder } from "./policy-builder";
 
 export default function PoliciesPage() {
-  return <SectionPage active="policies" description="Review rule sets that decide when approvals are required." title="Policies" />;
+  return (
+    <AppShell active="policies" description="Review rule sets that decide when approvals are required." title="Policies">
+      <PolicyBuilder />
+    </AppShell>
+  );
 }
