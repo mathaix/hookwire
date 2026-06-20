@@ -1,5 +1,10 @@
-import { SectionPage } from "../section-page";
+import { AppShell } from "../app-shell";
+import { RouteBuilder } from "./route-builder";
 
 export default function RoutesPage() {
-  return <SectionPage active="routes" description="Configure web inbox and external approval delivery targets." title="Routes" />;
+  return (
+    <AppShell active="routes" description="Configure web inbox and external approval delivery targets." title="Routes">
+      <RouteBuilder />
+    </AppShell>
+  );
 }

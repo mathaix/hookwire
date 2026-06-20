@@ -267,6 +267,7 @@ create table routes (
   approvals_required integer not null default 1,
   timeout_seconds integer not null default 900,
   fallback_route_id uuid,
+  enabled boolean not null default true,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   constraint routes_organization_fk foreign key (organization_id) references organizations (id) on delete cascade,

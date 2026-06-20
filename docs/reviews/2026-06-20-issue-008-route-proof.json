@@ -1,0 +1,196 @@
+{
+  "issue": "008-route-integration-config",
+  "generatedAt": "2026-06-20T15:19:52.247Z",
+  "targetTypes": [
+    "web_inbox",
+    "slack",
+    "sms",
+    "jira",
+    "linear",
+    "email",
+    "github",
+    "webhook",
+    "local_terminal"
+  ],
+  "routeIds": {
+    "fallback": "6f23df45-81ec-4b88-bd14-911528de9b61",
+    "providerMatrix": "e03bc9bd-bca1-49b2-8aea-de16904fa250",
+    "webInbox": "409b26f4-7355-4b6f-88ee-16134eb93822"
+  },
+  "groupIds": {
+    "engineering": "3224e741-2b7b-4df0-9b9f-2b263b36095e",
+    "release": "096c8562-66b4-4b28-a920-1012a4189946"
+  },
+  "queryProof": {
+    "acme": {
+      "policyRouteReferences": [
+        {
+          "name": "Route config writes",
+          "decision": "route",
+          "route_id": "409b26f4-7355-4b6f-88ee-16134eb93822"
+        }
+      ],
+      "routes": [
+        {
+          "id": "6f23df45-81ec-4b88-bd14-911528de9b61",
+          "name": "Fallback terminal",
+          "approvals_required": 1,
+          "timeout_seconds": 300,
+          "fallback_route_id": null,
+          "enabled": true
+        },
+        {
+          "id": "e03bc9bd-bca1-49b2-8aea-de16904fa250",
+          "name": "Provider matrix",
+          "approvals_required": 2,
+          "timeout_seconds": 600,
+          "fallback_route_id": null,
+          "enabled": true
+        },
+        {
+          "id": "409b26f4-7355-4b6f-88ee-16134eb93822",
+          "name": "Web inbox",
+          "approvals_required": 1,
+          "timeout_seconds": 900,
+          "fallback_route_id": "6f23df45-81ec-4b88-bd14-911528de9b61",
+          "enabled": true
+        }
+      ],
+      "targets": [
+        {
+          "target_type": "web_inbox",
+          "priority": 10,
+          "enabled": true,
+          "config_json": {
+            "recipientKind": "group",
+            "providerStatus": "active"
+          },
+          "route_name": "Provider matrix",
+          "integration_provider": null,
+          "integration_status": null,
+          "approval_group_name": "Engineering reviewers",
+          "current_on_call_user_name": null
+        },
+        {
+          "target_type": "slack",
+          "priority": 20,
+          "enabled": true,
+          "config_json": {
+            "recipientKind": "on_call",
+            "providerStatus": "modeled"
+          },
+          "route_name": "Provider matrix",
+          "integration_provider": "slack",
+          "integration_status": "inactive",
+          "approval_group_name": "Release on-call",
+          "current_on_call_user_name": "Maya"
+        },
+        {
+          "target_type": "sms",
+          "priority": 30,
+          "enabled": true,
+          "config_json": {
+            "recipientKind": "group",
+            "providerStatus": "modeled"
+          },
+          "route_name": "Provider matrix",
+          "integration_provider": "twilio",
+          "integration_status": "inactive",
+          "approval_group_name": "Engineering reviewers",
+          "current_on_call_user_name": null
+        },
+        {
+          "target_type": "jira",
+          "priority": 40,
+          "enabled": true,
+          "config_json": {
+            "recipientKind": "on_call",
+            "providerStatus": "modeled"
+          },
+          "route_name": "Provider matrix",
+          "integration_provider": "jira",
+          "integration_status": "inactive",
+          "approval_group_name": "Release on-call",
+          "current_on_call_user_name": "Maya"
+        },
+        {
+          "target_type": "linear",
+          "priority": 50,
+          "enabled": true,
+          "config_json": {
+            "recipientKind": "group",
+            "providerStatus": "modeled"
+          },
+          "route_name": "Provider matrix",
+          "integration_provider": "linear",
+          "integration_status": "inactive",
+          "approval_group_name": "Engineering reviewers",
+          "current_on_call_user_name": null
+        },
+        {
+          "target_type": "email",
+          "priority": 60,
+          "enabled": true,
+          "config_json": {
+            "recipientKind": "on_call",
+            "providerStatus": "modeled"
+          },
+          "route_name": "Provider matrix",
+          "integration_provider": "email",
+          "integration_status": "inactive",
+          "approval_group_name": "Release on-call",
+          "current_on_call_user_name": "Maya"
+        },
+        {
+          "target_type": "github",
+          "priority": 70,
+          "enabled": true,
+          "config_json": {
+            "recipientKind": "group",
+            "providerStatus": "modeled"
+          },
+          "route_name": "Provider matrix",
+          "integration_provider": "github",
+          "integration_status": "inactive",
+          "approval_group_name": "Engineering reviewers",
+          "current_on_call_user_name": null
+        },
+        {
+          "target_type": "webhook",
+          "priority": 80,
+          "enabled": true,
+          "config_json": {
+            "recipientKind": "on_call",
+            "providerStatus": "modeled"
+          },
+          "route_name": "Provider matrix",
+          "integration_provider": "webhook",
+          "integration_status": "inactive",
+          "approval_group_name": "Release on-call",
+          "current_on_call_user_name": "Maya"
+        },
+        {
+          "target_type": "local_terminal",
+          "priority": 90,
+          "enabled": true,
+          "config_json": {
+            "recipientKind": "system",
+            "providerStatus": "active"
+          },
+          "route_name": "Provider matrix",
+          "integration_provider": null,
+          "integration_status": null,
+          "approval_group_name": null,
+          "current_on_call_user_name": null
+        }
+      ],
+      "globexDirectRlsProbe": []
+    }
+  },
+  "screenshotProof": {
+    "consoleMessages": [],
+    "routeFieldsScreenshot": "/Users/mantiz/Documents/hookwire/docs/reviews/2026-06-20-issue-008-route-fields.png",
+    "routeListDetailScreenshot": "/Users/mantiz/Documents/hookwire/docs/reviews/2026-06-20-issue-008-route-list-detail.png",
+    "targetEditorScreenshot": "/Users/mantiz/Documents/hookwire/docs/reviews/2026-06-20-issue-008-target-editor.png"
+  }
+}

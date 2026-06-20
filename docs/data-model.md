@@ -257,6 +257,7 @@ Rules are evaluated by ascending `priority`; priorities are unique within a poli
 - approvals_required
 - timeout_seconds
 - fallback_route_id
+- enabled
 - created_at
 - updated_at
 
