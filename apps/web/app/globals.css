@@ -336,14 +336,22 @@ td span {
   color: var(--amber);
 }
 
+.status-active,
 .status-approved {
   background: var(--accent-soft);
   color: var(--accent);
 }
 
+.status-idle {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
 .status-denied,
 .status-expired,
-.status-cancelled {
+.status-cancelled,
+.status-ended,
+.status-errored {
   background: var(--red-soft);
   color: var(--red);
 }
@@ -599,6 +607,139 @@ td span {
   font-size: 12px;
 }
 
+.session-filters {
+  align-items: end;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(5, minmax(150px, 1fr));
+}
+
+.session-filters label {
+  display: grid;
+  gap: 6px;
+}
+
+.session-filters span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.session-filters select {
+  appearance: none;
+  background: var(--panel-soft);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text);
+  min-height: 36px;
+  padding: 0 10px;
+  width: 100%;
+}
+
+.session-metrics {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.metric-tile {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 4px;
+  min-height: 74px;
+  padding: 14px;
+}
+
+.metric-tile strong {
+  font-size: 18px;
+}
+
+.metric-tile span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.session-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(560px, 1.25fr) minmax(340px, 0.75fr);
+}
+
+.session-list table {
+  min-width: 680px;
+  table-layout: fixed;
+}
+
+.session-list th:nth-child(1) {
+  width: 17%;
+}
+
+.session-list th:nth-child(2) {
+  width: 25%;
+}
+
+.session-list th:nth-child(3),
+.session-list th:nth-child(4),
+.session-list th:nth-child(5) {
+  width: 12%;
+}
+
+.session-list th:nth-child(6) {
+  width: 22%;
+}
+
+.session-detail {
+  align-self: start;
+}
+
+.linked-session-section {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.linked-session-section h3 {
+  font-size: 13px;
+  margin: 0;
+}
+
+.linked-session-section pre {
+  background: #111820;
+  border-radius: 7px;
+  color: #e6edf3;
+  font-size: 12px;
+  line-height: 1.45;
+  margin: 6px 0 0;
+  max-height: 180px;
+  overflow: auto;
+  padding: 10px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.session-empty-state {
+  display: grid;
+  gap: 8px;
+  min-height: 180px;
+  place-content: center;
+  text-align: center;
+}
+
+.session-empty-state h2,
+.session-empty-state p {
+  margin: 0;
+}
+
+.session-empty-state p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
 @media (max-width: 900px) {
   .app-shell {
     display: block;
@@ -640,8 +781,14 @@ td span {
   .dashboard-grid,
   .operations-grid,
   .settings-grid,
+  .session-grid,
+  .session-metrics,
   .detail-list-grid {
     grid-template-columns: 1fr;
+  }
+
+  .session-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .approval-list .table-wrap {
@@ -651,5 +798,11 @@ td span {
 
   .approval-list table {
     min-width: 680px;
+  }
+}
+
+@media (max-width: 520px) {
+  .session-filters {
+    grid-template-columns: 1fr;
   }
 }

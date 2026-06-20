@@ -1,0 +1,146 @@
+{
+  "issue": "006-session-explorer",
+  "generatedAt": "2026-06-20T01:12:38.803Z",
+  "seededSessionIds": {
+    "claude": "6048fa20-6b13-4caf-9ffd-31c6037f48d9",
+    "codex": "327bf7d6-3bdb-402a-82f1-0740c7a0f794",
+    "openclaw": "83b2ee9b-a41b-4fcd-9ad9-434fdb435cce",
+    "otherTenant": "17c9b7bd-5875-4cec-80f4-39847878888d"
+  },
+  "projectIds": {
+    "hookwireWeb": "e7ffb89a-cb9b-4ec7-9a1c-8ce394f4d04b",
+    "infraRelay": "23cf38e0-a938-4122-b6ee-366fdf290196"
+  },
+  "queryProof": {
+    "acme": {
+      "allSessions": [
+        {
+          "id": "6048fa20-6b13-4caf-9ffd-31c6037f48d9",
+          "external_session_id": "claude-a88c",
+          "agent_type": "claude",
+          "status": "idle",
+          "project_name": "infra/relay",
+          "hook_event_count": "1",
+          "approval_request_count": "1",
+          "pending_approval_count": "1",
+          "decision_count": "0",
+          "highest_risk": "medium",
+          "started_at": "2026-06-18T16:50:00.000Z"
+        },
+        {
+          "id": "327bf7d6-3bdb-402a-82f1-0740c7a0f794",
+          "external_session_id": "codex-7f31",
+          "agent_type": "codex",
+          "status": "active",
+          "project_name": "hookwire/web",
+          "hook_event_count": "2",
+          "approval_request_count": "1",
+          "pending_approval_count": "0",
+          "decision_count": "1",
+          "highest_risk": "high",
+          "started_at": "2026-06-18T17:15:00.000Z"
+        },
+        {
+          "id": "83b2ee9b-a41b-4fcd-9ad9-434fdb435cce",
+          "external_session_id": "openclaw-19b2",
+          "agent_type": "openclaw",
+          "status": "ended",
+          "project_name": "hookwire/web",
+          "hook_event_count": "1",
+          "approval_request_count": "0",
+          "pending_approval_count": "0",
+          "decision_count": "0",
+          "highest_risk": "low",
+          "started_at": "2026-06-12T10:00:00.000Z"
+        }
+      ],
+      "codexHigh": [
+        {
+          "id": "327bf7d6-3bdb-402a-82f1-0740c7a0f794",
+          "external_session_id": "codex-7f31",
+          "agent_type": "codex",
+          "status": "active",
+          "project_name": "hookwire/web",
+          "hook_event_count": "2",
+          "approval_request_count": "1",
+          "pending_approval_count": "0",
+          "decision_count": "1",
+          "highest_risk": "high",
+          "started_at": "2026-06-18T17:15:00.000Z"
+        }
+      ],
+      "detail": {
+        "approvalDecisions": [
+          {
+            "approval_request_id": "9a5d9383-288f-4273-81ad-394f58ec71a6",
+            "decision": "approved",
+            "scope": "once",
+            "source": "web",
+            "reason": "Reviewed migration"
+          }
+        ],
+        "approvalRequests": [
+          {
+            "id": "9a5d9383-288f-4273-81ad-394f58ec71a6",
+            "status": "approved",
+            "risk_level": "high",
+            "action_summary": "Apply migration and write project settings"
+          }
+        ],
+        "hookEvents": [
+          {
+            "event_type": "tool.invoked",
+            "tool_name": "shell",
+            "operation": "npm run db:migrate",
+            "risk_level": "high",
+            "payload_redacted": {
+              "env": {
+                "DATABASE_URL": "postgres://hookwire:[redacted]@localhost:5432/hookwire"
+              },
+              "command": "curl -H \"Authorization: Bearer [redacted]\" https://api.example.test"
+            }
+          },
+          {
+            "event_type": "approval.requested",
+            "tool_name": "approval",
+            "operation": "approval request created",
+            "risk_level": "high",
+            "payload_redacted": {
+              "token": "[redacted]",
+              "approvalId": "APR-1042"
+            }
+          }
+        ],
+        "session": {
+          "id": "327bf7d6-3bdb-402a-82f1-0740c7a0f794",
+          "external_session_id": "codex-7f31",
+          "agent_type": "codex",
+          "status": "active"
+        }
+      },
+      "globexDirectRlsProbe": [],
+      "globexLeakProbe": null
+    },
+    "globex": [
+      {
+        "id": "17c9b7bd-5875-4cec-80f4-39847878888d",
+        "external_session_id": "globex-codex",
+        "agent_type": "codex",
+        "status": "active",
+        "project_name": "globex/app",
+        "hook_event_count": "1",
+        "approval_request_count": "1",
+        "pending_approval_count": "1",
+        "decision_count": "0",
+        "highest_risk": "critical",
+        "started_at": "2026-06-18T17:10:00.000Z"
+      }
+    ]
+  },
+  "screenshotProof": {
+    "consoleMessages": [],
+    "detailScreenshot": "/Users/mantiz/Documents/hookwire/docs/reviews/2026-06-20-issue-006-session-detail.png",
+    "filtersScreenshot": "/Users/mantiz/Documents/hookwire/docs/reviews/2026-06-20-issue-006-session-filters.png",
+    "redactionChecked": true
+  }
+}

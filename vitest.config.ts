@@ -13,7 +13,12 @@ export default defineConfig({
         statements: 90
       },
       // Docker-backed proof scripts are verified by explicit npm proof commands, not unit coverage.
-      include: ["scripts/verify-docs.mjs", "apps/web/app/approvals/**/*.ts", "apps/web/app/api/approvals/**/*.ts"]
+      include: [
+        "scripts/verify-docs.mjs",
+        "apps/web/app/approvals/**/*.ts",
+        "apps/web/app/api/approvals/**/*.ts",
+        "apps/web/app/sessions/**/*.ts"
+      ]
     }
   }
 });
