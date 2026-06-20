@@ -1,0 +1,147 @@
+{
+  "api_results": {
+    "approve": {
+      "body": {
+        "approvalRequestId": "6ba16c07-77b1-42bb-b8ff-a5b8172a96e1",
+        "auditEventId": "01c234d7-8dd7-4a4b-be67-6e1c78fda8fd",
+        "decision": "approved",
+        "decisionId": "7fd17f9b-780c-4a89-9d22-bda4815a2fc4",
+        "reason": null,
+        "scope": "once",
+        "status": "approved",
+        "userId": "288a7695-af7c-4033-99aa-34bfcca28974"
+      },
+      "status": 200
+    },
+    "repeatApprove": {
+      "body": {
+        "code": "already_decided",
+        "message": "Approval request is approved."
+      },
+      "status": 409
+    },
+    "deny": {
+      "body": {
+        "approvalRequestId": "df11924f-d325-466a-b207-722e2192311c",
+        "auditEventId": "3f1c912e-dc1c-47f4-8ad7-f96b864feb77",
+        "decision": "denied",
+        "decisionId": "5bf94489-9131-434b-a8dd-72c59c77062b",
+        "reason": "Touches protected relay routing",
+        "scope": "session",
+        "status": "denied",
+        "userId": "288a7695-af7c-4033-99aa-34bfcca28974"
+      },
+      "status": 200
+    },
+    "repeatDeny": {
+      "body": {
+        "code": "already_decided",
+        "message": "Approval request is denied."
+      },
+      "status": 409
+    },
+    "expired": {
+      "body": {
+        "code": "expired",
+        "message": "Approval request is expired."
+      },
+      "status": 409
+    },
+    "unauthorized": {
+      "body": {
+        "code": "unauthorized",
+        "message": "User is not eligible to decide this approval request."
+      },
+      "status": 403
+    },
+    "wrongOrganizationUser": {
+      "body": {
+        "code": "unauthorized",
+        "message": "User is not eligible to decide this approval request."
+      },
+      "status": 403
+    }
+  },
+  "database": {
+    "approval_decisions": [
+      {
+        "approval_request_id": "6ba16c07-77b1-42bb-b8ff-a5b8172a96e1",
+        "user_id": "288a7695-af7c-4033-99aa-34bfcca28974",
+        "source": "web",
+        "decision": "approved",
+        "scope": "once",
+        "reason": null
+      },
+      {
+        "approval_request_id": "df11924f-d325-466a-b207-722e2192311c",
+        "user_id": "288a7695-af7c-4033-99aa-34bfcca28974",
+        "source": "web",
+        "decision": "denied",
+        "scope": "session",
+        "reason": "Touches protected relay routing"
+      }
+    ],
+    "approval_requests": [
+      {
+        "id": "6ba16c07-77b1-42bb-b8ff-a5b8172a96e1",
+        "status": "approved",
+        "action_summary": "Approve migration"
+      },
+      {
+        "id": "df11924f-d325-466a-b207-722e2192311c",
+        "status": "denied",
+        "action_summary": "Deny relay config patch"
+      },
+      {
+        "id": "fa3a6f08-f684-4f17-9231-f83668d322f1",
+        "status": "expired",
+        "action_summary": "Expired deploy"
+      },
+      {
+        "id": "542017a7-3c66-4221-ba49-23c97fe95334",
+        "status": "pending",
+        "action_summary": "Unauthorized probe"
+      }
+    ],
+    "audit_events": [
+      {
+        "actor_user_id": "288a7695-af7c-4033-99aa-34bfcca28974",
+        "event_type": "approval.approved",
+        "entity_id": "6ba16c07-77b1-42bb-b8ff-a5b8172a96e1",
+        "metadata_json": {
+          "scope": "once",
+          "reason": null,
+          "source": "web",
+          "routeId": "e14d5001-64b9-415f-aaf3-44446202e04d",
+          "decision": "approved",
+          "riskLevel": "high",
+          "decisionId": "7fd17f9b-780c-4a89-9d22-bda4815a2fc4",
+          "actorUserId": "288a7695-af7c-4033-99aa-34bfcca28974",
+          "approvalRequestId": "6ba16c07-77b1-42bb-b8ff-a5b8172a96e1"
+        }
+      },
+      {
+        "actor_user_id": "288a7695-af7c-4033-99aa-34bfcca28974",
+        "event_type": "approval.denied",
+        "entity_id": "df11924f-d325-466a-b207-722e2192311c",
+        "metadata_json": {
+          "scope": "session",
+          "reason": "Touches protected relay routing",
+          "source": "web",
+          "routeId": "e14d5001-64b9-415f-aaf3-44446202e04d",
+          "decision": "denied",
+          "riskLevel": "medium",
+          "decisionId": "5bf94489-9131-434b-a8dd-72c59c77062b",
+          "actorUserId": "288a7695-af7c-4033-99aa-34bfcca28974",
+          "approvalRequestId": "df11924f-d325-466a-b207-722e2192311c"
+        }
+      }
+    ]
+  },
+  "seeded_request_ids": {
+    "expired": "fa3a6f08-f684-4f17-9231-f83668d322f1",
+    "pendingApprove": "6ba16c07-77b1-42bb-b8ff-a5b8172a96e1",
+    "pendingDeny": "df11924f-d325-466a-b207-722e2192311c",
+    "unauthorizedProbe": "542017a7-3c66-4221-ba49-23c97fe95334"
+  }
+}
