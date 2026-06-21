@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { runClaudeHook } from "../../agent-adapters/src/claude.mjs";
 import { runDoctor, runInit, supportedAgents } from "../src/installer.mjs";
 
 async function main(argv) {
@@ -31,6 +32,19 @@ async function main(argv) {
     return result.ok ? 0 : 2;
   }
 
+  if (command === "hook") {
+    const result = await runClaudeHook({
+      agent: options.agent,
+      decision: options.decision,
+      eventName: options.eventName,
+      input: await readStdin(),
+      reason: options.reason
+    });
+    process.stdout.write(result.stdout);
+    process.stderr.write(result.stderr);
+    return result.exitCode;
+  }
+
   throw new Error(`Unknown command "${command}".`);
 }
 
@@ -40,6 +54,7 @@ function parseArgs(args) {
     homeDir: undefined,
     json: false,
     projectDir: undefined,
+    reason: undefined,
     selectedAgents: []
   };
 
@@ -61,15 +76,41 @@ function parseArgs(args) {
       options.projectDir = readValue(args, (index += 1), "--project");
       continue;
     }
-    if (arg === "--agent" || arg === "--agents") {
-      const value = readValue(args, (index += 1), arg);
+    if (arg === "--agent") {
+      const value = readValue(args, (index += 1), "--agent");
+      options.agent = value;
       options.selectedAgents.push(...value.split(",").map((agent) => agent.trim()).filter(Boolean));
+      continue;
+    }
+    if (arg === "--agents") {
+      const value = readValue(args, (index += 1), "--agents");
+      options.selectedAgents.push(...value.split(",").map((agent) => agent.trim()).filter(Boolean));
+      continue;
+    }
+    if (arg === "--event") {
+      options.eventName = readValue(args, (index += 1), "--event");
+      continue;
+    }
+    if (arg === "--decision") {
+      options.decision = readValue(args, (index += 1), "--decision");
+      continue;
+    }
+    if (arg === "--reason") {
+      options.reason = readValue(args, (index += 1), "--reason");
       continue;
     }
     throw new Error(`Unknown option "${arg}".`);
   }
 
   return options;
+}
+
+async function readStdin() {
+  let input = "";
+  for await (const chunk of process.stdin) {
+    input += chunk.toString();
+  }
+  return input;
 }
 
 function readValue(args, index, option) {
@@ -138,6 +179,7 @@ function printHelp() {
 Usage:
   hookwire init [--dry-run] [--home <dir>] [--project <dir>] [--agent <agent[,agent]>] [--json]
   hookwire doctor [--home <dir>] [--project <dir>] [--json]
+  hookwire hook --agent claude --event <event> [--decision <allow|deny|ask>] [--reason <text>]
 
 Supported agents: ${supportedAgents().join(", ")}
 `);

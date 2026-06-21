@@ -15,6 +15,7 @@ export default defineConfig({
       // Docker-backed proof scripts are verified by explicit npm proof commands, not unit coverage.
       include: [
         "scripts/verify-docs.mjs",
+        "packages/agent-adapters/src/**/*.mjs",
         "packages/installer/src/**/*.mjs",
         "apps/web/app/audit/**/*.ts",
         "apps/web/app/approvals/**/*.ts",

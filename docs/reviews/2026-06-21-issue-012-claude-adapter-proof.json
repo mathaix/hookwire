@@ -1,0 +1,626 @@
+{
+  "issue": "012-claude-adapter",
+  "generatedAt": "2026-06-21T22:19:51.533Z",
+  "fixture": {
+    "homeDir": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/home",
+    "projectDir": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces",
+    "root": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M"
+  },
+  "sanitizedFixtures": {
+    "permissionRequest": {
+      "cwd": "/workspace/hookwire",
+      "hook_event_name": "PermissionRequest",
+      "permission_mode": "default",
+      "permission_suggestions": [
+        {
+          "behavior": "allow",
+          "destination": "localSettings",
+          "rules": [
+            {
+              "ruleContent": "npm test",
+              "toolName": "Bash"
+            }
+          ],
+          "type": "addRules"
+        }
+      ],
+      "session_id": "sess-proof-claude",
+      "tool_input": {
+        "command": "npm test"
+      },
+      "tool_name": "Bash",
+      "transcript_path": "/tmp/hookwire-claude-transcript.jsonl"
+    },
+    "postToolUse": {
+      "cwd": "/workspace/hookwire",
+      "duration_ms": 37,
+      "hook_event_name": "PostToolUse",
+      "permission_mode": "default",
+      "session_id": "sess-proof-claude",
+      "tool_input": {
+        "file_path": "/workspace/hookwire/README.md"
+      },
+      "tool_name": "Read",
+      "tool_response": {
+        "filePath": "/workspace/hookwire/README.md",
+        "success": true
+      },
+      "tool_use_id": "toolu_post_proof",
+      "transcript_path": "/tmp/hookwire-claude-transcript.jsonl"
+    },
+    "preToolUse": {
+      "cwd": "/workspace/hookwire",
+      "hook_event_name": "PreToolUse",
+      "permission_mode": "default",
+      "session_id": "sess-proof-claude",
+      "tool_input": {
+        "command": "npm test",
+        "description": "Run tests"
+      },
+      "tool_name": "Bash",
+      "tool_use_id": "toolu_pre_proof",
+      "transcript_path": "/tmp/hookwire-claude-transcript.jsonl"
+    }
+  },
+  "normalizedEvents": {
+    "permissionRequest": {
+      "agent": "claude",
+      "cwd": "/workspace/hookwire",
+      "durationMs": null,
+      "eventType": "PermissionRequest",
+      "permissionMode": "default",
+      "permissionSuggestions": [
+        {
+          "behavior": "allow",
+          "destination": "localSettings",
+          "rules": [
+            {
+              "ruleContent": "npm test",
+              "toolName": "Bash"
+            }
+          ],
+          "type": "addRules"
+        }
+      ],
+      "schemaVersion": 1,
+      "sessionId": "sess-proof-claude",
+      "toolInput": {
+        "command": "npm test"
+      },
+      "toolName": "Bash",
+      "toolResponse": null,
+      "toolUseId": null,
+      "transcriptPath": "/tmp/hookwire-claude-transcript.jsonl"
+    },
+    "postToolUse": {
+      "agent": "claude",
+      "cwd": "/workspace/hookwire",
+      "durationMs": 37,
+      "eventType": "PostToolUse",
+      "permissionMode": "default",
+      "permissionSuggestions": [],
+      "schemaVersion": 1,
+      "sessionId": "sess-proof-claude",
+      "toolInput": {
+        "file_path": "/workspace/hookwire/README.md"
+      },
+      "toolName": "Read",
+      "toolResponse": {
+        "filePath": "/workspace/hookwire/README.md",
+        "success": true
+      },
+      "toolUseId": "toolu_post_proof",
+      "transcriptPath": "/tmp/hookwire-claude-transcript.jsonl"
+    },
+    "preToolUse": {
+      "agent": "claude",
+      "cwd": "/workspace/hookwire",
+      "durationMs": null,
+      "eventType": "PreToolUse",
+      "permissionMode": "default",
+      "permissionSuggestions": [],
+      "schemaVersion": 1,
+      "sessionId": "sess-proof-claude",
+      "toolInput": {
+        "command": "npm test",
+        "description": "Run tests"
+      },
+      "toolName": "Bash",
+      "toolResponse": null,
+      "toolUseId": "toolu_pre_proof",
+      "transcriptPath": "/tmp/hookwire-claude-transcript.jsonl"
+    }
+  },
+  "goldenOutputs": {
+    "ask": {
+      "hookSpecificOutput": {
+        "hookEventName": "PreToolUse",
+        "permissionDecision": "ask",
+        "permissionDecisionReason": "Needs review"
+      }
+    },
+    "allow": {
+      "hookSpecificOutput": {
+        "hookEventName": "PreToolUse",
+        "permissionDecision": "allow",
+        "permissionDecisionReason": "Safe command"
+      }
+    },
+    "deny": {
+      "hookSpecificOutput": {
+        "hookEventName": "PreToolUse",
+        "permissionDecision": "deny",
+        "permissionDecisionReason": "Policy"
+      }
+    },
+    "malformedPreToolUse": {
+      "hookSpecificOutput": {
+        "hookEventName": "PreToolUse",
+        "permissionDecision": "deny",
+        "permissionDecisionReason": "Hookwire could not process Claude PreToolUse payload."
+      }
+    },
+    "permissionAllow": {
+      "hookSpecificOutput": {
+        "decision": {
+          "behavior": "allow",
+          "message": "Approved",
+          "updatedInput": {
+            "command": "npm run lint"
+          },
+          "updatedPermissions": [
+            {
+              "behavior": "allow",
+              "destination": "localSettings",
+              "rules": [
+                {
+                  "ruleContent": "npm test",
+                  "toolName": "Bash"
+                }
+              ],
+              "type": "addRules"
+            }
+          ]
+        },
+        "hookEventName": "PermissionRequest"
+      }
+    },
+    "postToolUseBlock": {
+      "decision": "block",
+      "reason": "Blocked after audit"
+    }
+  },
+  "installer": {
+    "actions": [
+      {
+        "action": "updated",
+        "agent": "claude",
+        "backupCreated": true,
+        "backupPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/home/.claude/.hookwire-backups/settings.json.2026-06-21T16-30-00-000Z.bak",
+        "configPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/home/.claude/settings.json",
+        "expected": {
+          "adapterCommand": "hookwire relay --agent claude --project /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces",
+          "agent": "claude",
+          "installedAt": "2026-06-21T16:30:00.000Z",
+          "managed": true,
+          "projectPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces",
+          "version": 1
+        }
+      }
+    ],
+    "afterTree": [
+      {
+        "kind": "dir",
+        "path": "home"
+      },
+      {
+        "kind": "dir",
+        "path": "home/.claude"
+      },
+      {
+        "kind": "dir",
+        "path": "home/.claude/.hookwire-backups"
+      },
+      {
+        "bytes": 234,
+        "kind": "file",
+        "path": "home/.claude/.hookwire-backups/settings.json.2026-06-21T16-30-00-000Z.bak"
+      },
+      {
+        "bytes": 2375,
+        "kind": "file",
+        "path": "home/.claude/settings.json"
+      },
+      {
+        "kind": "dir",
+        "path": "project with spaces"
+      }
+    ],
+    "beforeTree": [
+      {
+        "kind": "dir",
+        "path": "home"
+      },
+      {
+        "kind": "dir",
+        "path": "home/.claude"
+      },
+      {
+        "bytes": 234,
+        "kind": "file",
+        "path": "home/.claude/settings.json"
+      },
+      {
+        "kind": "dir",
+        "path": "project with spaces"
+      }
+    ],
+    "claudeConfigDiff": "--- before/.claude/settings.json\n+++ after/.claude/settings.json\n@@\n-{\n-  \"hooks\": {\n-    \"PostToolUse\": [\n-      {\n-        \"hooks\": [\n-          {\n-            \"command\": \"echo existing\",\n-            \"type\": \"command\"\n-          }\n-        ],\n-        \"matcher\": \"Write\"\n-      }\n-    ]\n-  },\n-  \"theme\": \"dark\"\n-}\n+{\n+  \"hooks\": {\n+    \"PostToolUse\": [\n+      {\n+        \"hooks\": [\n+          {\n+            \"args\": [\n+              \"hook\",\n+              \"--agent\",\n+              \"claude\",\n+              \"--event\",\n+              \"PostToolUse\",\n+              \"--project\",\n+              \"/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces\"\n+            ],\n+            \"command\": \"hookwire\",\n+            \"statusMessage\": \"Checking Hookwire approval policy\",\n+            \"timeout\": 60,\n+            \"type\": \"command\"\n+          }\n+        ],\n+        \"matcher\": \"*\"\n+      },\n+      {\n+        \"hooks\": [\n+          {\n+            \"command\": \"echo existing\",\n+            \"type\": \"command\"\n+          }\n+        ],\n+        \"matcher\": \"Write\"\n+      }\n+    ],\n+    \"PreToolUse\": [\n+      {\n+        \"hooks\": [\n+          {\n+            \"args\": [\n+              \"hook\",\n+              \"--agent\",\n+              \"claude\",\n+              \"--event\",\n+              \"PreToolUse\",\n+              \"--project\",\n+              \"/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces\"\n+            ],\n+            \"command\": \"hookwire\",\n+            \"statusMessage\": \"Checking Hookwire approval policy\",\n+            \"timeout\": 60,\n+            \"type\": \"command\"\n+          }\n+        ],\n+        \"matcher\": \"*\"\n+      }\n+    ],\n+    \"PermissionRequest\": [\n+      {\n+        \"hooks\": [\n+          {\n+            \"args\": [\n+              \"hook\",\n+              \"--agent\",\n+              \"claude\",\n+              \"--event\",\n+              \"PermissionRequest\",\n+              \"--project\",\n+              \"/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces\"\n+            ],\n+            \"command\": \"hookwire\",\n+            \"statusMessage\": \"Checking Hookwire approval policy\",\n+            \"timeout\": 60,\n+            \"type\": \"command\"\n+          }\n+        ],\n+        \"matcher\": \"*\"\n+      }\n+    ]\n+  },\n+  \"theme\": \"dark\",\n+  \"hookwire\": {\n+    \"adapterCommand\": \"hookwire relay --agent claude --project /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces\",\n+    \"agent\": \"claude\",\n+    \"installedAt\": \"2026-06-21T16:30:00.000Z\",\n+    \"managed\": true,\n+    \"projectPath\": \"/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces\",\n+    \"version\": 1\n+  }\n+}",
+    "expectedPreToolUseCommand": {
+      "args": [
+        "hook",
+        "--agent",
+        "claude",
+        "--event",
+        "PreToolUse",
+        "--project",
+        "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces"
+      ],
+      "command": "hookwire",
+      "statusMessage": "Checking Hookwire approval policy",
+      "timeout": 60,
+      "type": "command"
+    }
+  },
+  "cli": {
+    "deny": {
+      "exitCode": 0,
+      "stderr": "",
+      "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Policy\"}}\n"
+    }
+  },
+  "doctor": {
+    "drifted": {
+      "agent": "claude",
+      "configDir": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/home/.claude",
+      "configExists": true,
+      "configPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/home/.claude/settings.json",
+      "detected": true,
+      "displayName": "Claude Code",
+      "projectDir": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces",
+      "actual": {
+        "adapterCommand": "hookwire relay --agent claude --project /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces",
+        "agent": "claude",
+        "installedAt": "2026-06-21T16:30:00.000Z",
+        "managed": true,
+        "projectPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces",
+        "version": 1,
+        "claudeHooks": {
+          "PostToolUse": [
+            {
+              "hooks": [
+                {
+                  "args": [
+                    "hook",
+                    "--agent",
+                    "claude",
+                    "--event",
+                    "PostToolUse",
+                    "--project",
+                    "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces"
+                  ],
+                  "command": "hookwire",
+                  "statusMessage": "Checking Hookwire approval policy",
+                  "timeout": 60,
+                  "type": "command"
+                }
+              ],
+              "matcher": "*"
+            },
+            {
+              "hooks": [
+                {
+                  "command": "echo existing",
+                  "type": "command"
+                }
+              ],
+              "matcher": "Write"
+            }
+          ],
+          "PreToolUse": [
+            {
+              "hooks": [
+                {
+                  "args": [
+                    "hook",
+                    "--agent",
+                    "claude",
+                    "--event",
+                    "PreToolUse",
+                    "--project",
+                    "/wrong/project"
+                  ],
+                  "command": "hookwire",
+                  "statusMessage": "Checking Hookwire approval policy",
+                  "timeout": 60,
+                  "type": "command"
+                }
+              ],
+              "matcher": "*"
+            }
+          ],
+          "PermissionRequest": [
+            {
+              "hooks": [
+                {
+                  "args": [
+                    "hook",
+                    "--agent",
+                    "claude",
+                    "--event",
+                    "PermissionRequest",
+                    "--project",
+                    "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces"
+                  ],
+                  "command": "hookwire",
+                  "statusMessage": "Checking Hookwire approval policy",
+                  "timeout": 60,
+                  "type": "command"
+                }
+              ],
+              "matcher": "*"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "adapterCommand": "hookwire relay --agent claude --project /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces",
+        "agent": "claude",
+        "installedAt": "2026-06-21T16:30:00.000Z",
+        "managed": true,
+        "projectPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces",
+        "version": 1,
+        "claudeHooks": {
+          "PreToolUse": [
+            {
+              "hooks": [
+                {
+                  "args": [
+                    "hook",
+                    "--agent",
+                    "claude",
+                    "--event",
+                    "PreToolUse",
+                    "--project",
+                    "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces"
+                  ],
+                  "command": "hookwire",
+                  "statusMessage": "Checking Hookwire approval policy",
+                  "timeout": 60,
+                  "type": "command"
+                }
+              ],
+              "matcher": "*"
+            }
+          ],
+          "PermissionRequest": [
+            {
+              "hooks": [
+                {
+                  "args": [
+                    "hook",
+                    "--agent",
+                    "claude",
+                    "--event",
+                    "PermissionRequest",
+                    "--project",
+                    "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces"
+                  ],
+                  "command": "hookwire",
+                  "statusMessage": "Checking Hookwire approval policy",
+                  "timeout": 60,
+                  "type": "command"
+                }
+              ],
+              "matcher": "*"
+            }
+          ],
+          "PostToolUse": [
+            {
+              "hooks": [
+                {
+                  "args": [
+                    "hook",
+                    "--agent",
+                    "claude",
+                    "--event",
+                    "PostToolUse",
+                    "--project",
+                    "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces"
+                  ],
+                  "command": "hookwire",
+                  "statusMessage": "Checking Hookwire approval policy",
+                  "timeout": 60,
+                  "type": "command"
+                }
+              ],
+              "matcher": "*"
+            }
+          ]
+        }
+      },
+      "status": "drifted"
+    },
+    "healthy": {
+      "agent": "claude",
+      "configDir": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/home/.claude",
+      "configExists": true,
+      "configPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/home/.claude/settings.json",
+      "detected": true,
+      "displayName": "Claude Code",
+      "projectDir": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces",
+      "actual": {
+        "adapterCommand": "hookwire relay --agent claude --project /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces",
+        "agent": "claude",
+        "installedAt": "2026-06-21T16:30:00.000Z",
+        "managed": true,
+        "projectPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces",
+        "version": 1,
+        "claudeHooks": {
+          "PostToolUse": [
+            {
+              "hooks": [
+                {
+                  "args": [
+                    "hook",
+                    "--agent",
+                    "claude",
+                    "--event",
+                    "PostToolUse",
+                    "--project",
+                    "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces"
+                  ],
+                  "command": "hookwire",
+                  "statusMessage": "Checking Hookwire approval policy",
+                  "timeout": 60,
+                  "type": "command"
+                }
+              ],
+              "matcher": "*"
+            },
+            {
+              "hooks": [
+                {
+                  "command": "echo existing",
+                  "type": "command"
+                }
+              ],
+              "matcher": "Write"
+            }
+          ],
+          "PreToolUse": [
+            {
+              "hooks": [
+                {
+                  "args": [
+                    "hook",
+                    "--agent",
+                    "claude",
+                    "--event",
+                    "PreToolUse",
+                    "--project",
+                    "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces"
+                  ],
+                  "command": "hookwire",
+                  "statusMessage": "Checking Hookwire approval policy",
+                  "timeout": 60,
+                  "type": "command"
+                }
+              ],
+              "matcher": "*"
+            }
+          ],
+          "PermissionRequest": [
+            {
+              "hooks": [
+                {
+                  "args": [
+                    "hook",
+                    "--agent",
+                    "claude",
+                    "--event",
+                    "PermissionRequest",
+                    "--project",
+                    "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces"
+                  ],
+                  "command": "hookwire",
+                  "statusMessage": "Checking Hookwire approval policy",
+                  "timeout": 60,
+                  "type": "command"
+                }
+              ],
+              "matcher": "*"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "adapterCommand": "hookwire relay --agent claude --project /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces",
+        "agent": "claude",
+        "installedAt": "2026-06-21T16:30:00.000Z",
+        "managed": true,
+        "projectPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces",
+        "version": 1,
+        "claudeHooks": {
+          "PreToolUse": [
+            {
+              "hooks": [
+                {
+                  "args": [
+                    "hook",
+                    "--agent",
+                    "claude",
+                    "--event",
+                    "PreToolUse",
+                    "--project",
+                    "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces"
+                  ],
+                  "command": "hookwire",
+                  "statusMessage": "Checking Hookwire approval policy",
+                  "timeout": 60,
+                  "type": "command"
+                }
+              ],
+              "matcher": "*"
+            }
+          ],
+          "PermissionRequest": [
+            {
+              "hooks": [
+                {
+                  "args": [
+                    "hook",
+                    "--agent",
+                    "claude",
+                    "--event",
+                    "PermissionRequest",
+                    "--project",
+                    "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces"
+                  ],
+                  "command": "hookwire",
+                  "statusMessage": "Checking Hookwire approval policy",
+                  "timeout": 60,
+                  "type": "command"
+                }
+              ],
+              "matcher": "*"
+            }
+          ],
+          "PostToolUse": [
+            {
+              "hooks": [
+                {
+                  "args": [
+                    "hook",
+                    "--agent",
+                    "claude",
+                    "--event",
+                    "PostToolUse",
+                    "--project",
+                    "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-claude-proof-GzRA0M/project with spaces"
+                  ],
+                  "command": "hookwire",
+                  "statusMessage": "Checking Hookwire approval policy",
+                  "timeout": 60,
+                  "type": "command"
+                }
+              ],
+              "matcher": "*"
+            }
+          ]
+        }
+      },
+      "status": "healthy"
+    }
+  }
+}

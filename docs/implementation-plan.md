@@ -255,7 +255,7 @@ Tasks:
 - [x] Back up existing hook configs before mutation.
 - [x] Install Hookwire-managed adapter config block.
 - [x] Implement `hookwire doctor`.
-- [ ] Implement Claude adapter.
+- [x] Implement Claude adapter.
 - [ ] Implement Codex adapter.
 - [ ] Implement OpenClaw adapter.
 
@@ -391,7 +391,7 @@ Estimated effort: 2-3 weeks.
 - Phase 3: Not started.
 - Phase 4: Not started.
 - Phase 5: Not started.
-- Phase 6: Installer framework complete; agent-specific adapters pending.
+- Phase 6: Installer framework and Claude adapter complete; Codex and OpenClaw adapters pending.
 - Phase 7: Not started.
 
-Latest update: 2026-06-21. Added the installer detection, backup, dry-run, managed config, and doctor framework for Claude Code, Codex, and OpenClaw.
+Latest update: 2026-06-21. Added the Claude Code hook adapter, Claude hook config generation, and doctor validation on top of the installer framework.

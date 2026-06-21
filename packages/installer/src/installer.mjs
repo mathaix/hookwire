@@ -3,6 +3,11 @@ import { chmod, copyFile, mkdir, readFile, rename, stat, unlink, writeFile } fro
 import os from "node:os";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
+import {
+  claudeHooksMatch,
+  expectedClaudeHooks,
+  mergeClaudeHooks
+} from "../../agent-adapters/src/claude.mjs";
 
 export const CURRENT_HOOKWIRE_CONFIG_VERSION = 1;
 
@@ -97,7 +102,7 @@ export async function runInit(options = {}) {
       }
 
       try {
-        await writeJsonNewFile(configPath, { hookwire: expected });
+        await writeJsonNewFile(configPath, buildNextAgentConfig({ agent, config: {}, expected, projectDir }));
       } catch (error) {
         if (error.code !== "EEXIST") {
           throw error;
@@ -144,10 +149,7 @@ export async function runInit(options = {}) {
       installedAt: existingInstalledAt,
       projectDir
     });
-    const nextConfig = {
-      ...config,
-      hookwire: expected
-    };
+    const nextConfig = buildNextAgentConfig({ agent, config, expected, projectDir });
 
     if (sameJson(config, nextConfig)) {
       agents.push({
@@ -233,7 +235,7 @@ export async function runDoctor(options = {}) {
     }
 
     const actual = loaded.config.hookwire;
-    const expected = expectedHookwireConfig({
+    const expected = expectedDoctorConfig({
       agent: detection.agent,
       installedAt: actual?.installedAt ?? null,
       projectDir
@@ -259,10 +261,10 @@ export async function runDoctor(options = {}) {
       continue;
     }
 
-    if (!matchesExpectedHookwireConfig(actual, expected)) {
+    if (!matchesExpectedHookwireConfig(actual, expected) || !matchesAgentConfig(detection.agent, loaded.config, projectDir)) {
       agents.push({
         ...detection,
-        actual,
+        actual: actualDoctorConfig(detection.agent, loaded.config),
         expected,
         status: "drifted"
       });
@@ -271,7 +273,7 @@ export async function runDoctor(options = {}) {
 
     agents.push({
       ...detection,
-      actual,
+      actual: actualDoctorConfig(detection.agent, loaded.config),
       expected,
       status: "healthy"
     });
@@ -283,6 +285,48 @@ export async function runDoctor(options = {}) {
     ok: agents.every((agent) => agent.status === "healthy"),
     projectDir
   };
+}
+
+function buildNextAgentConfig({ agent, config, expected, projectDir }) {
+  const nextConfig = {
+    ...config,
+    hookwire: expected
+  };
+
+  if (agent === "claude") {
+    nextConfig.hooks = mergeClaudeHooks(config.hooks, { projectDir });
+  }
+
+  return nextConfig;
+}
+
+function expectedDoctorConfig({ agent, installedAt, projectDir }) {
+  const expected = expectedHookwireConfig({ agent, installedAt, projectDir });
+  if (agent === "claude") {
+    expected.claudeHooks = expectedClaudeHooks({ projectDir });
+  }
+  return expected;
+}
+
+function actualDoctorConfig(agent, config) {
+  const actual = config.hookwire;
+  if (!isPlainObject(actual)) {
+    return actual;
+  }
+  if (agent !== "claude") {
+    return actual;
+  }
+  return {
+    ...actual,
+    claudeHooks: isPlainObject(config.hooks) ? config.hooks : null
+  };
+}
+
+function matchesAgentConfig(agent, config, projectDir) {
+  if (agent !== "claude") {
+    return true;
+  }
+  return claudeHooksMatch(config, { projectDir });
 }
 
 function normalizeSelectedAgents(selectedAgents) {

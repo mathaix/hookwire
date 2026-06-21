@@ -48,6 +48,7 @@ Responsibilities:
 - Detect Claude Code, Codex, and OpenClaw.
 - Back up existing agent hook configuration.
 - Register a Hookwire-managed adapter command block before agent-specific adapters translate it into runtime-specific hook formats.
+- For Claude Code, install exec-form command hooks for `PreToolUse`, `PermissionRequest`, and `PostToolUse` that invoke `hookwire hook --agent claude`.
 - Create default local policy and relay config.
 - Validate the integration with a sample event.
 

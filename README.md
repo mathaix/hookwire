@@ -47,7 +47,7 @@ node packages/installer/bin/hookwire.mjs init --dry-run
 node packages/installer/bin/hookwire.mjs doctor
 ```
 
-The installer currently writes a Hookwire-managed JSON config block for Claude Code, Codex, and OpenClaw. It backs up existing config files before mutation and should be run with `--dry-run` first while the agent-specific adapters are still being implemented.
+The installer writes a Hookwire-managed JSON config block for Claude Code, Codex, and OpenClaw. Claude Code hook installation is wired through exec-form hooks that invoke `hookwire hook --agent claude`; Codex and OpenClaw adapters are still pending. Run installer changes with `--dry-run` first.
 
 Run the standard local verification checks:
 
