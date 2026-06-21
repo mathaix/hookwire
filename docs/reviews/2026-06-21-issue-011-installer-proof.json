@@ -1,0 +1,159 @@
+{
+  "issue": "011-installer-framework",
+  "generatedAt": "2026-06-21T17:25:21.490Z",
+  "fixture": {
+    "homeDir": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/home",
+    "projectDir": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/project",
+    "root": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO"
+  },
+  "dryRun": {
+    "actions": [
+      {
+        "action": "would_update",
+        "agent": "claude",
+        "backupPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/home/.claude/.hookwire-backups/settings.json.2026-06-21T15-30-00-000Z.bak",
+        "configPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/home/.claude/settings.json"
+      },
+      {
+        "action": "would_create",
+        "agent": "codex",
+        "backupPath": null,
+        "configPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/home/.codex/config.json"
+      }
+    ],
+    "afterTree": [
+      {
+        "kind": "dir",
+        "path": "home"
+      },
+      {
+        "kind": "dir",
+        "path": "home/.claude"
+      },
+      {
+        "bytes": 42,
+        "kind": "file",
+        "path": "home/.claude/settings.json"
+      },
+      {
+        "kind": "dir",
+        "path": "project"
+      }
+    ],
+    "beforeTree": [
+      {
+        "kind": "dir",
+        "path": "home"
+      },
+      {
+        "kind": "dir",
+        "path": "home/.claude"
+      },
+      {
+        "bytes": 42,
+        "kind": "file",
+        "path": "home/.claude/settings.json"
+      },
+      {
+        "kind": "dir",
+        "path": "project"
+      }
+    ],
+    "fileUnchanged": true
+  },
+  "init": {
+    "actions": [
+      {
+        "action": "updated",
+        "agent": "claude",
+        "backupCreated": true,
+        "backupPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/home/.claude/.hookwire-backups/settings.json.2026-06-21T15-30-00-000Z.bak",
+        "configPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/home/.claude/settings.json"
+      },
+      {
+        "action": "created",
+        "agent": "codex",
+        "backupCreated": false,
+        "backupPath": null,
+        "configPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/home/.codex/config.json"
+      },
+      {
+        "action": "created",
+        "agent": "openclaw",
+        "backupCreated": false,
+        "backupPath": null,
+        "configPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/home/.openclaw/config.json"
+      }
+    ],
+    "afterTree": [
+      {
+        "kind": "dir",
+        "path": "home"
+      },
+      {
+        "kind": "dir",
+        "path": "home/.claude"
+      },
+      {
+        "kind": "dir",
+        "path": "home/.claude/.hookwire-backups"
+      },
+      {
+        "bytes": 42,
+        "kind": "file",
+        "path": "home/.claude/.hookwire-backups/settings.json.2026-06-21T15-30-00-000Z.bak"
+      },
+      {
+        "bytes": 436,
+        "kind": "file",
+        "path": "home/.claude/settings.json"
+      },
+      {
+        "kind": "dir",
+        "path": "home/.codex"
+      },
+      {
+        "bytes": 395,
+        "kind": "file",
+        "path": "home/.codex/config.json"
+      },
+      {
+        "kind": "dir",
+        "path": "home/.openclaw"
+      },
+      {
+        "bytes": 401,
+        "kind": "file",
+        "path": "home/.openclaw/config.json"
+      },
+      {
+        "kind": "dir",
+        "path": "project"
+      }
+    ],
+    "backupFiles": [
+      {
+        "kind": "dir",
+        "path": "home/.claude/.hookwire-backups"
+      },
+      {
+        "bytes": 42,
+        "kind": "file",
+        "path": "home/.claude/.hookwire-backups/settings.json.2026-06-21T15-30-00-000Z.bak"
+      }
+    ],
+    "claudeConfigDiff": "--- before/.claude/settings.json\n+++ after/.claude/settings.json\n@@\n-{\n-  \"existing\": true,\n-  \"theme\": \"dark\"\n-}\n+{\n+  \"existing\": true,\n+  \"theme\": \"dark\",\n+  \"hookwire\": {\n+    \"adapterCommand\": \"hookwire relay --agent claude --project /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/project\",\n+    \"agent\": \"claude\",\n+    \"installedAt\": \"2026-06-21T15:30:00.000Z\",\n+    \"managed\": true,\n+    \"projectPath\": \"/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/project\",\n+    \"version\": 1\n+  }\n+}"
+  },
+  "doctor": {
+    "drifted": {
+      "exitCode": 2,
+      "stderr": "",
+      "stdout": "Hookwire doctor needs attention\nHome: /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/home\nProject: /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/project\n\nclaude: healthy /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/home/.claude/settings.json\ncodex: drifted /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/home/.codex/config.json\n  expected: hookwire relay --agent codex --project /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/project\n  actual: hookwire relay --agent codex --project /wrong/project\nopenclaw: healthy /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/home/.openclaw/config.json\n"
+    },
+    "healthy": {
+      "exitCode": 0,
+      "stderr": "",
+      "stdout": "Hookwire doctor healthy\nHome: /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/home\nProject: /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/project\n\nclaude: healthy /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/home/.claude/settings.json\ncodex: healthy /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/home/.codex/config.json\nopenclaw: healthy /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-installer-proof-9c4UwO/home/.openclaw/config.json\n"
+    }
+  }
+}

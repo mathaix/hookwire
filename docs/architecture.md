@@ -47,7 +47,7 @@ Responsibilities:
 - Install or locate the Hookwire binary.
 - Detect Claude Code, Codex, and OpenClaw.
 - Back up existing agent hook configuration.
-- Register Hookwire hook adapter commands.
+- Register a Hookwire-managed adapter command block before agent-specific adapters translate it into runtime-specific hook formats.
 - Create default local policy and relay config.
 - Validate the integration with a sample event.
 

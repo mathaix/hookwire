@@ -40,6 +40,15 @@ npm run web:dev
 
 Then open the local URL printed by Next.js, usually `http://localhost:3000`.
 
+Try the installer framework against your current home and project directories:
+
+```sh
+node packages/installer/bin/hookwire.mjs init --dry-run
+node packages/installer/bin/hookwire.mjs doctor
+```
+
+The installer currently writes a Hookwire-managed JSON config block for Claude Code, Codex, and OpenClaw. It backs up existing config files before mutation and should be run with `--dry-run` first while the agent-specific adapters are still being implemented.
+
 Run the standard local verification checks:
 
 ```sh

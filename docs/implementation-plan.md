@@ -250,11 +250,11 @@ Goal: install Hookwire into Claude Code, Codex, and OpenClaw safely.
 
 Tasks:
 
-- [ ] Implement `hookwire init`.
-- [ ] Detect Claude Code, Codex, and OpenClaw.
-- [ ] Back up existing hook configs before mutation.
-- [ ] Install hook adapter config.
-- [ ] Implement `hookwire doctor`.
+- [x] Implement `hookwire init`.
+- [x] Detect Claude Code, Codex, and OpenClaw.
+- [x] Back up existing hook configs before mutation.
+- [x] Install Hookwire-managed adapter config block.
+- [x] Implement `hookwire doctor`.
 - [ ] Implement Claude adapter.
 - [ ] Implement Codex adapter.
 - [ ] Implement OpenClaw adapter.
@@ -391,7 +391,7 @@ Estimated effort: 2-3 weeks.
 - Phase 3: Not started.
 - Phase 4: Not started.
 - Phase 5: Not started.
-- Phase 6: Not started.
+- Phase 6: Installer framework complete; agent-specific adapters pending.
 - Phase 7: Not started.
 
-Latest update: 2026-06-18. Completed the GitHub Actions CI task for the public repository and marked Phase 0 complete.
+Latest update: 2026-06-21. Added the installer detection, backup, dry-run, managed config, and doctor framework for Claude Code, Codex, and OpenClaw.
