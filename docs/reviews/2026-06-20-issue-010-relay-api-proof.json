@@ -1,0 +1,280 @@
+{
+  "api": {
+    "approvedDecision": {
+      "json": {
+        "approvalRequestId": "151f6ff0-f58a-4a82-badb-b54270735a9e",
+        "decidedAt": "2026-06-21T00:21:37.571Z",
+        "decision": "approved",
+        "decisionId": "d0c88dee-aaf5-4060-9a66-42527ab261ae",
+        "reason": null,
+        "scope": "once",
+        "status": "approved",
+        "userId": "718633d2-5293-4043-bd5d-b48f1909adc4"
+      },
+      "status": 200
+    },
+    "approveCreate": {
+      "json": {
+        "agentInstallationId": "3d02aa5e-61f7-4ef5-99b0-11bd9a176be0",
+        "agentSessionId": "e6b84ade-b8ce-4d5f-965d-05edfbbc3e0d",
+        "approvalRequestId": "151f6ff0-f58a-4a82-badb-b54270735a9e",
+        "expiresAt": "2099-06-20T18:45:00.000Z",
+        "hookEventId": "3496653f-f547-4ea2-87b1-cad654b1d238",
+        "organizationId": "829c7253-766d-460a-bc09-32ba276ecbc8",
+        "projectId": "5f46fcb7-69ea-4dff-8bfd-f87656cbfac2",
+        "status": "pending"
+      },
+      "status": 201
+    },
+    "approveDecision": {
+      "json": {
+        "approvalRequestId": "151f6ff0-f58a-4a82-badb-b54270735a9e",
+        "auditEventId": "5c2a03cb-b452-4019-8cde-431ed58ca8a6",
+        "decision": "approved",
+        "decisionId": "d0c88dee-aaf5-4060-9a66-42527ab261ae",
+        "reason": null,
+        "scope": "once",
+        "status": "approved",
+        "userId": "718633d2-5293-4043-bd5d-b48f1909adc4"
+      },
+      "status": 200
+    },
+    "deniedDecision": {
+      "json": {
+        "approvalRequestId": "620b6a9e-48d7-489d-ab84-c63fa68d1b29",
+        "decidedAt": "2026-06-21T00:21:37.608Z",
+        "decision": "denied",
+        "decisionId": "43957ddf-7c31-4f31-9180-78523c4576bd",
+        "reason": "Route requires manual proof review",
+        "scope": "session",
+        "status": "denied",
+        "userId": "718633d2-5293-4043-bd5d-b48f1909adc4"
+      },
+      "status": 200
+    },
+    "denyCreate": {
+      "json": {
+        "agentInstallationId": "3d02aa5e-61f7-4ef5-99b0-11bd9a176be0",
+        "agentSessionId": "e6b84ade-b8ce-4d5f-965d-05edfbbc3e0d",
+        "approvalRequestId": "620b6a9e-48d7-489d-ab84-c63fa68d1b29",
+        "expiresAt": "2099-06-20T18:45:00.000Z",
+        "hookEventId": "ed47c2bb-204d-49f9-8092-3063929bf9cd",
+        "organizationId": "829c7253-766d-460a-bc09-32ba276ecbc8",
+        "projectId": "5f46fcb7-69ea-4dff-8bfd-f87656cbfac2",
+        "status": "pending"
+      },
+      "status": 201
+    },
+    "denyDecision": {
+      "json": {
+        "approvalRequestId": "620b6a9e-48d7-489d-ab84-c63fa68d1b29",
+        "auditEventId": "45fe770d-b83b-431d-a8e9-8ada23cc86fd",
+        "decision": "denied",
+        "decisionId": "43957ddf-7c31-4f31-9180-78523c4576bd",
+        "reason": "Route requires manual proof review",
+        "scope": "session",
+        "status": "denied",
+        "userId": "718633d2-5293-4043-bd5d-b48f1909adc4"
+      },
+      "status": 200
+    },
+    "invalidSignatureCreate": {
+      "json": {
+        "code": "invalid_relay_signature",
+        "message": "Relay signature is invalid."
+      },
+      "status": 401
+    },
+    "pendingDecision": {
+      "json": {
+        "approvalRequestId": "151f6ff0-f58a-4a82-badb-b54270735a9e",
+        "decidedAt": null,
+        "decision": null,
+        "decisionId": null,
+        "reason": null,
+        "scope": null,
+        "status": "pending",
+        "userId": null
+      },
+      "status": 200
+    },
+    "replayFirst": {
+      "json": {
+        "agentInstallationId": "3d02aa5e-61f7-4ef5-99b0-11bd9a176be0",
+        "agentSessionId": "e6b84ade-b8ce-4d5f-965d-05edfbbc3e0d",
+        "approvalRequestId": "d11cb942-6265-40be-94de-7c4999429955",
+        "expiresAt": "2099-06-20T18:45:00.000Z",
+        "hookEventId": "b92b1eb8-67b7-4acb-9128-dce595b447e2",
+        "organizationId": "829c7253-766d-460a-bc09-32ba276ecbc8",
+        "projectId": "5f46fcb7-69ea-4dff-8bfd-f87656cbfac2",
+        "status": "pending"
+      },
+      "status": 201
+    },
+    "replaySecond": {
+      "json": {
+        "code": "replayed_relay_nonce",
+        "message": "Relay nonce has already been used."
+      },
+      "status": 409
+    },
+    "revokedCredentialCreate": {
+      "json": {
+        "code": "relay_credential_not_active",
+        "message": "Relay credential is not active."
+      },
+      "status": 401
+    },
+    "staleTimestampCreate": {
+      "json": {
+        "code": "stale_relay_timestamp",
+        "message": "Relay timestamp is outside the allowed clock skew."
+      },
+      "status": 401
+    },
+    "unsignedCreate": {
+      "json": {
+        "code": "missing_relay_signature",
+        "message": "Relay signature headers are required."
+      },
+      "status": 401
+    },
+    "wrongProjectCreate": {
+      "json": {
+        "code": "credential_project_mismatch",
+        "message": "Relay credential is not bound to this project."
+      },
+      "status": 403
+    }
+  },
+  "database": {
+    "credential": {
+      "id": "5fb6abe4-2951-4b21-822a-132455147b24",
+      "organization_id": "829c7253-766d-460a-bc09-32ba276ecbc8",
+      "project_id": "5f46fcb7-69ea-4dff-8bfd-f87656cbfac2",
+      "agent_installation_id": "3d02aa5e-61f7-4ef5-99b0-11bd9a176be0",
+      "status": "revoked",
+      "used": true,
+      "saw_nonce": true
+    },
+    "decisions": [
+      {
+        "approval_request_id": "151f6ff0-f58a-4a82-badb-b54270735a9e",
+        "decision": "approved",
+        "scope": "once",
+        "reason": null,
+        "source": "web"
+      },
+      {
+        "approval_request_id": "620b6a9e-48d7-489d-ab84-c63fa68d1b29",
+        "decision": "denied",
+        "scope": "session",
+        "reason": "Route requires manual proof review",
+        "source": "web"
+      }
+    ],
+    "nonceCount": 6,
+    "requests": [
+      {
+        "id": "d11cb942-6265-40be-94de-7c4999429955",
+        "organization_id": "829c7253-766d-460a-bc09-32ba276ecbc8",
+        "project_id": "5f46fcb7-69ea-4dff-8bfd-f87656cbfac2",
+        "agent_tool_id": "8866f464-0d70-4375-a419-0fa1c2e486e0",
+        "agent_installation_id": "3d02aa5e-61f7-4ef5-99b0-11bd9a176be0",
+        "agent_session_id": "e6b84ade-b8ce-4d5f-965d-05edfbbc3e0d",
+        "hook_event_id": "b92b1eb8-67b7-4acb-9128-dce595b447e2",
+        "route_id": "4f9cf3b3-f899-4cb0-a263-e809931363a4",
+        "status": "pending",
+        "risk_level": "high",
+        "redacted_payload_json": {
+          "fields": {
+            "command": "npm run deploy -- --target production",
+            "environment": "[REDACTED]"
+          },
+          "summary": "Deploy command with environment values redacted",
+          "redacted": true
+        },
+        "event_type": "PreToolUse",
+        "tool_name": "Bash",
+        "operation": "deploy",
+        "payload_redacted": {
+          "fields": {
+            "command": "npm run deploy -- --target production",
+            "environment": "[REDACTED]"
+          },
+          "summary": "Deploy command with environment values redacted",
+          "redacted": true
+        }
+      },
+      {
+        "id": "151f6ff0-f58a-4a82-badb-b54270735a9e",
+        "organization_id": "829c7253-766d-460a-bc09-32ba276ecbc8",
+        "project_id": "5f46fcb7-69ea-4dff-8bfd-f87656cbfac2",
+        "agent_tool_id": "8866f464-0d70-4375-a419-0fa1c2e486e0",
+        "agent_installation_id": "3d02aa5e-61f7-4ef5-99b0-11bd9a176be0",
+        "agent_session_id": "e6b84ade-b8ce-4d5f-965d-05edfbbc3e0d",
+        "hook_event_id": "3496653f-f547-4ea2-87b1-cad654b1d238",
+        "route_id": "4f9cf3b3-f899-4cb0-a263-e809931363a4",
+        "status": "approved",
+        "risk_level": "high",
+        "redacted_payload_json": {
+          "fields": {
+            "command": "npm run deploy -- --target production",
+            "environment": "[REDACTED]"
+          },
+          "summary": "Deploy command with environment values redacted",
+          "redacted": true
+        },
+        "event_type": "PreToolUse",
+        "tool_name": "Bash",
+        "operation": "deploy",
+        "payload_redacted": {
+          "fields": {
+            "command": "npm run deploy -- --target production",
+            "environment": "[REDACTED]"
+          },
+          "summary": "Deploy command with environment values redacted",
+          "redacted": true
+        }
+      },
+      {
+        "id": "620b6a9e-48d7-489d-ab84-c63fa68d1b29",
+        "organization_id": "829c7253-766d-460a-bc09-32ba276ecbc8",
+        "project_id": "5f46fcb7-69ea-4dff-8bfd-f87656cbfac2",
+        "agent_tool_id": "8866f464-0d70-4375-a419-0fa1c2e486e0",
+        "agent_installation_id": "3d02aa5e-61f7-4ef5-99b0-11bd9a176be0",
+        "agent_session_id": "e6b84ade-b8ce-4d5f-965d-05edfbbc3e0d",
+        "hook_event_id": "ed47c2bb-204d-49f9-8092-3063929bf9cd",
+        "route_id": "4f9cf3b3-f899-4cb0-a263-e809931363a4",
+        "status": "denied",
+        "risk_level": "high",
+        "redacted_payload_json": {
+          "fields": {
+            "command": "npm run deploy -- --target production",
+            "environment": "[REDACTED]"
+          },
+          "summary": "Deploy command with environment values redacted",
+          "redacted": true
+        },
+        "event_type": "PreToolUse",
+        "tool_name": "Bash",
+        "operation": "deploy",
+        "payload_redacted": {
+          "fields": {
+            "command": "npm run deploy -- --target production",
+            "environment": "[REDACTED]"
+          },
+          "summary": "Deploy command with environment values redacted",
+          "redacted": true
+        }
+      }
+    ]
+  },
+  "signedRequestContext": {
+    "bodyHash": "5d8ca72770c8212fb900ad5dfd00e1de2a782357e59072cc2b7145f7fd4cb851",
+    "keyId": "5fb6abe4-2951-4b21-822a-132455147b24",
+    "nonce": "03e1a583-eaa8-4ef2-b632-ebe38023726e",
+    "signature": "[REDACTED]",
+    "timestamp": "2026-06-20T18:30:00.000Z"
+  }
+}

@@ -1,5 +1,7 @@
 # Hookwire Architecture
 
+Rendered Mermaid diagrams for the architecture and main approval sequences live in [diagrams.md](diagrams.md).
+
 ## Components
 
 ### Web Control Plane
@@ -148,18 +150,32 @@ Rules:
 - Key registration, rotation, and revocation are audit events.
 - Key rotation should create a new key before revoking the old one so the installer can recover cleanly.
 
-The signed request context should include at least:
+The v1 relay approval API exposes:
+
+- `POST /api/relay/approvals` to create a pending approval request from a redacted hook-event envelope.
+- `GET /api/relay/approvals/{approvalRequestId}/decision` to poll for `pending`, `approved`, `denied`, or `expired`.
+
+Each request must include:
+
+- `x-hookwire-key-id`
+- `x-hookwire-timestamp`
+- `x-hookwire-nonce`
+- `x-hookwire-body-sha256`
+- `x-hookwire-signature`
+
+The Ed25519 signature is computed over this canonical string:
 
 ```text
-method
-path
-body_sha256
-timestamp
-nonce
-organization_id
-project_id
-agent_installation_id
+hookwire-relay-v1
+METHOD
+PATH
+KEY_ID
+TIMESTAMP
+NONCE
+BODY_SHA256
 ```
+
+The body still carries `projectId`, `agentInstallationId`, `agentSessionId`, and `routeId`; the backend verifies those values against the registered credential instead of trusting them as authority.
 
 ## V1 Approval Flow
 

@@ -132,7 +132,9 @@ Supported `agent_type` values should include `claude`, `codex`, and `openclaw`.
 - created_at
 - updated_at
 
-`installation_credentials` should be asymmetric signing credentials, not bearer tokens. The relay signs requests with the local private key; the backend verifies signatures with the registered public key and rejects revoked credentials.
+`installation_credentials` should be asymmetric signing credentials, not bearer tokens. The relay signs requests with the local private key; the backend verifies signatures with the registered public key and rejects revoked credentials. A relay credential is bound to exactly one organization, project, and installation; signed request bodies that claim a different `projectId` or `agentInstallationId` are rejected.
+
+Relay approval requests use the credential id as `x-hookwire-key-id`. The request signature covers method, path, key id, timestamp, nonce, and SHA-256 body hash. The backend stores `last_used_at` and `last_nonce_seen_at` on successful relay calls so operators can identify stale or compromised local installations.
 
 ### relay_request_nonces
 
@@ -144,7 +146,7 @@ Supported `agent_type` values should include `claude`, `codex`, and `openclaw`.
 - seen_at
 - expires_at
 
-Used to prevent replay of signed relay requests within the accepted clock-skew window.
+Used to prevent replay of signed relay requests within the accepted clock-skew window. Nonces are hashed before storage and are unique per installation credential. The API records a nonce only after the credential signature is valid and tenant context has been established.
 
 ### agent_sessions
 

@@ -222,14 +222,14 @@ Goal: let a local Hookwire relay create signed approval requests and receive dec
 
 Tasks:
 
-- [ ] Define relay API request and response contracts.
-- [ ] Implement signed approval request creation endpoint.
-- [ ] Implement decision polling or subscription endpoint.
+- [x] Define relay API request and response contracts.
+- [x] Implement signed approval request creation endpoint.
+- [x] Implement decision polling or subscription endpoint.
 - [ ] Implement local relay skeleton.
 - [ ] Implement local policy cache format.
 - [ ] Implement local redaction pipeline.
 - [ ] Implement local audit queue.
-- [ ] Add end-to-end tests for signed relay -> approval request -> web decision -> relay decision retrieval.
+- [x] Add end-to-end tests for signed relay -> approval request -> web decision -> relay decision retrieval.
 
 Related issues:
 

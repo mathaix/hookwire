@@ -14,18 +14,44 @@ Hookwire has three major surfaces:
 
 The first runnable milestone is the web app itself. Slack, SMS, Jira, Linear, email, GitHub, and webhook approvals should be represented in the routing and integration model, but the first delivery path can be the Hookwire web inbox.
 
-## Local Development
+## Getting Started
 
-The initial Postgres schema and migration runner live in [packages/db](packages/db/README.md). For local schema work, start Postgres with Docker Compose and run the migration commands from the repository root.
+Hookwire is currently in MVP development. The first runnable surface is the Next.js web control plane in `apps/web`; the installer and local relay will build on the signed relay API and data model as they stabilize.
 
-The initial web control plane shell lives in `apps/web`.
+Prerequisites:
+
+- Node.js 22. Use `nvm use` if you manage Node with nvm.
+- npm.
+- Playwright browsers for e2e tests.
+- Docker for DB-backed proof scripts and schema verification.
+
+Install dependencies from a fresh checkout:
 
 ```sh
+npm ci
+npx playwright install --with-deps chromium
+```
+
+Run the web app locally:
+
+```sh
+npm run web:dev
+```
+
+Then open the local URL printed by Next.js, usually `http://localhost:3000`.
+
+Run the standard local verification checks:
+
+```sh
+npm run test:unit
+npm run verify:docs
+npm run test:e2e
 npm run web:lint
 npm run web:typecheck
 npm run web:build
-npm run test:e2e
 ```
+
+For database and API contract work, the schema and migration runner live in [packages/db](packages/db/README.md). Issue-specific proof scripts are exposed as `proof:issueNNN:*` npm scripts and may start temporary Postgres containers with Docker.
 
 ## Architecture Decisions
 
@@ -38,6 +64,7 @@ npm run test:e2e
 ## Repo Planning
 
 Architecture details live in [docs/architecture.md](docs/architecture.md).
+Architecture and sequence diagrams live in [docs/diagrams.md](docs/diagrams.md).
 The multiuser data model lives in [docs/data-model.md](docs/data-model.md).
 The initial implementation backlog lives in [docs/issues](docs/issues/README.md).
 The sequenced implementation plan lives in [docs/implementation-plan.md](docs/implementation-plan.md).

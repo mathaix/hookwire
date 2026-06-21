@@ -18,6 +18,7 @@ export default defineConfig({
         "apps/web/app/audit/**/*.ts",
         "apps/web/app/approvals/**/*.ts",
         "apps/web/app/api/approvals/**/*.ts",
+        "apps/web/app/api/relay/**/*.ts",
         "apps/web/app/policies/**/*.ts",
         "apps/web/app/routes/**/*.ts",
         "apps/web/app/sessions/**/*.ts"
