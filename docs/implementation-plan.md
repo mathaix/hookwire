@@ -255,6 +255,7 @@ Tasks:
 - [x] Back up existing hook configs before mutation.
 - [x] Install Hookwire-managed adapter config block.
 - [x] Implement `hookwire doctor`.
+- [x] Add integration tier metadata, hook integrity checks, manual patch mode, and uninstall.
 - [x] Implement Claude adapter.
 - [ ] Implement Codex adapter.
 - [ ] Implement OpenClaw adapter.
@@ -265,6 +266,7 @@ Related issues:
 - [Claude Code adapter](issues/012-claude-adapter.md)
 - [Codex adapter](issues/013-codex-adapter.md)
 - [OpenClaw adapter](issues/014-openclaw-adapter.md)
+- [Integration lifecycle and hook integrity patterns](issues/022-integration-lifecycle-and-hook-integrity.md)
 
 Deliverables:
 
@@ -391,7 +393,7 @@ Estimated effort: 2-3 weeks.
 - Phase 3: Not started.
 - Phase 4: Not started.
 - Phase 5: Not started.
-- Phase 6: Installer framework and Claude adapter complete; Codex and OpenClaw adapters pending.
+- Phase 6: Installer framework, Claude adapter, integration tier metadata, hook integrity checks, manual patch mode, and uninstall complete; Codex and OpenClaw adapters pending.
 - Phase 7: Not started.
 
-Latest update: 2026-06-21. Added the Claude Code hook adapter, Claude hook config generation, and doctor validation on top of the installer framework.
+Latest update: 2026-06-22. Added integration lifecycle hardening: integration tiers, failure modes, SHA-256 managed hook integrity checks, manual/no-patch mode, and uninstall.

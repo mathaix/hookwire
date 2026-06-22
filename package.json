@@ -21,6 +21,7 @@
     "proof:issue010:relay": "node scripts/proof-issue-010-relay-api.mjs",
     "proof:issue011:installer": "node scripts/proof-issue-011-installer.mjs",
     "proof:issue012:claude": "node scripts/proof-issue-012-claude-adapter.mjs",
+    "proof:issue022:integration-patterns": "node scripts/proof-issue-022-integration-patterns.mjs",
     "web:build": "next build apps/web",
     "web:dev": "next dev apps/web",
     "web:e2e-server": "next build apps/web && next start apps/web --hostname 127.0.0.1 --port 3000",

@@ -50,6 +50,22 @@ export function mergeClaudeHooks(existingHooks, { projectDir }) {
   return nextHooks;
 }
 
+export function removeClaudeHooks(existingHooks) {
+  const nextHooks = cloneHooksObject(existingHooks);
+
+  for (const eventName of CLAUDE_HOOK_EVENTS) {
+    const existingGroups = Array.isArray(nextHooks[eventName]) ? nextHooks[eventName] : [];
+    const withoutHookwire = existingGroups.filter((group) => !isHookwireClaudeGroup(group, eventName));
+    if (withoutHookwire.length > 0) {
+      nextHooks[eventName] = withoutHookwire;
+    } else {
+      delete nextHooks[eventName];
+    }
+  }
+
+  return Object.keys(nextHooks).length > 0 ? nextHooks : undefined;
+}
+
 export function claudeHooksMatch(settings, { projectDir }) {
   if (!isPlainObject(settings?.hooks)) {
     return false;

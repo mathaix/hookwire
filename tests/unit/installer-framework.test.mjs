@@ -8,7 +8,8 @@ import {
   detectAgents,
   expectedHookwireConfig,
   runDoctor,
-  runInit
+  runInit,
+  runUninstall
 } from "../../packages/installer/src/installer.mjs";
 
 const fixedNow = new Date("2026-06-21T15:30:00.000Z");
@@ -94,11 +95,39 @@ describe("installer framework", () => {
       });
 
       expect(result.dryRun).toBe(true);
+      expect(result.patchMode).toBe("auto");
       expect(result.agents.map((agent) => [agent.agent, agent.action])).toEqual([
         ["claude", "would_update"],
         ["codex", "would_create"]
       ]);
       expect(result.agents[0].backupPath).toContain(".hookwire-backups");
+      expect(await readFile(claudeConfigPath, "utf8")).toBe(before);
+      expect(await exists(path.join(homeDir, ".claude/.hookwire-backups"))).toBe(false);
+      expect(await exists(path.join(homeDir, ".codex/config.json"))).toBe(false);
+    });
+  });
+
+  it("supports manual patch mode without modifying config files or creating backups", async () => {
+    await withFixture(async ({ homeDir, projectDir }) => {
+      const claudeConfigPath = path.join(homeDir, ".claude/settings.json");
+      await writeJson(claudeConfigPath, { existing: true });
+      const before = await readFile(claudeConfigPath, "utf8");
+
+      const result = await runInit({
+        dryRun: false,
+        homeDir,
+        now: fixedNow,
+        patchMode: "manual",
+        projectDir,
+        selectedAgents: ["claude", "codex"]
+      });
+
+      expect(result.patchMode).toBe("manual");
+      expect(result.agents.map((agent) => [agent.agent, agent.action])).toEqual([
+        ["claude", "manual_update"],
+        ["codex", "manual_create"]
+      ]);
+      expect(result.agents[0].manualInstructions).toContain("Manual patch mode selected");
       expect(await readFile(claudeConfigPath, "utf8")).toBe(before);
       expect(await exists(path.join(homeDir, ".claude/.hookwire-backups"))).toBe(false);
       expect(await exists(path.join(homeDir, ".codex/config.json"))).toBe(false);
@@ -253,11 +282,15 @@ describe("installer framework", () => {
         configPath: codexConfigPath
       });
       await expect(readJson(codexConfigPath)).resolves.toEqual({
-        hookwire: expectedHookwireConfig({
+        hookwire: expect.objectContaining(expectedHookwireConfig({
           agent: "codex",
           installedAt: fixedNow,
           projectDir
-        })
+        }))
+      });
+      expect((await readJson(codexConfigPath)).hookwire.integrity).toMatchObject({
+        algorithm: "sha256",
+        value: expect.stringMatching(/^[0-9a-f]{64}$/)
       });
       if (process.platform !== "win32") {
         expect(await mode(codexConfigPath)).toBe(0o600);
@@ -322,6 +355,93 @@ describe("installer framework", () => {
     });
   });
 
+  it("doctor reports tampered when managed hook integrity does not match", async () => {
+    await withFixture(async ({ homeDir, projectDir }) => {
+      await runInit({
+        dryRun: false,
+        homeDir,
+        now: fixedNow,
+        projectDir,
+        selectedAgents: ["claude"]
+      });
+
+      const claudeConfigPath = path.join(homeDir, ".claude/settings.json");
+      const claudeConfig = await readJson(claudeConfigPath);
+      claudeConfig.hooks.PreToolUse[0].hooks[0].args = [
+        "hook",
+        "--agent",
+        "claude",
+        "--event",
+        "PreToolUse",
+        "--project",
+        "/tampered/project"
+      ];
+      await writeJson(claudeConfigPath, claudeConfig);
+
+      const doctor = await runDoctor({ homeDir, projectDir });
+
+      expect(doctor.ok).toBe(false);
+      expect(doctor.agents.map((agent) => [agent.agent, agent.status])).toEqual([
+        ["claude", "tampered"],
+        ["codex", "missing_config"],
+        ["openclaw", "missing_config"]
+      ]);
+      expect(doctor.agents[0].actual.integrityCheck.status).toBe("tampered");
+    });
+  });
+
+  it("doctor ignores non-managed Claude hookwire commands when checking integrity", async () => {
+    await withFixture(async ({ homeDir, projectDir }) => {
+      await runInit({
+        dryRun: false,
+        homeDir,
+        now: fixedNow,
+        projectDir,
+        selectedAgents: ["claude"]
+      });
+
+      const claudeConfigPath = path.join(homeDir, ".claude/settings.json");
+      const claudeConfig = await readJson(claudeConfigPath);
+      claudeConfig.hooks.PreToolUse.push({
+        hooks: [
+          {
+            args: ["hook", "--event", "PreToolUse", "--agent", "claude", "--project", projectDir],
+            command: "hookwire",
+            type: "command"
+          }
+        ],
+        matcher: "Bash"
+      });
+      await writeJson(claudeConfigPath, claudeConfig);
+
+      const doctor = await runDoctor({ homeDir, projectDir });
+      const claude = doctor.agents.find((agent) => agent.agent === "claude");
+
+      expect(claude.status).toBe("healthy");
+      expect(claude.actual.integrityCheck.status).toBe("verified");
+    });
+  });
+
+  it("doctor reports missing integrity separately from ordinary drift", async () => {
+    await withFixture(async ({ homeDir, projectDir }) => {
+      await writeJson(path.join(homeDir, ".codex/config.json"), {
+        hookwire: expectedHookwireConfig({
+          agent: "codex",
+          installedAt: fixedNow,
+          projectDir
+        })
+      });
+
+      const doctor = await runDoctor({ homeDir, projectDir });
+      const codex = doctor.agents.find((agent) => agent.agent === "codex");
+
+      expect(codex).toMatchObject({
+        status: "tampered"
+      });
+      expect(codex.actual.integrityCheck.status).toBe("missing_integrity");
+    });
+  });
+
   it("doctor reports invalid JSON and missing Hookwire hook config", async () => {
     await withFixture(async ({ homeDir, projectDir }) => {
       const claudeConfigPath = path.join(homeDir, ".claude/settings.json");
@@ -360,6 +480,142 @@ describe("installer framework", () => {
         ["codex", "healthy"],
         ["openclaw", "healthy"]
       ]);
+      expect(doctor.agents[0].actual.integrityCheck.status).toBe("verified");
+    });
+  });
+
+  it("uninstall removes Hookwire-managed config and Claude hooks while preserving user hook groups", async () => {
+    await withFixture(async ({ homeDir, projectDir }) => {
+      const claudeConfigPath = path.join(homeDir, ".claude/settings.json");
+      await writeJson(claudeConfigPath, {
+        hooks: {
+          PostToolUse: [
+            {
+              hooks: [{ command: "echo custom", type: "command" }],
+              matcher: "Write"
+            }
+          ]
+        },
+        theme: "dark"
+      });
+      await runInit({
+        dryRun: false,
+        homeDir,
+        now: fixedNow,
+        projectDir,
+        selectedAgents: ["claude"]
+      });
+
+      const result = await runUninstall({
+        dryRun: false,
+        homeDir,
+        now: new Date("2026-06-21T16:30:00.000Z"),
+        projectDir,
+        selectedAgents: ["claude"]
+      });
+
+      expect(result.agents[0]).toMatchObject({
+        action: "removed",
+        backupCreated: true
+      });
+      await expect(readJson(claudeConfigPath)).resolves.toEqual({
+        hooks: {
+          PostToolUse: [
+            {
+              hooks: [{ command: "echo custom", type: "command" }],
+              matcher: "Write"
+            }
+          ]
+        },
+        theme: "dark"
+      });
+      await expect(readJson(result.agents[0].backupPath)).resolves.toHaveProperty("hookwire");
+    });
+  });
+
+  it("uninstall supports dry-run, manual mode, missing config, invalid JSON, and unchanged config", async () => {
+    await withFixture(async ({ homeDir, projectDir }) => {
+      await runInit({
+        dryRun: false,
+        homeDir,
+        now: fixedNow,
+        projectDir,
+        selectedAgents: ["codex"]
+      });
+      const codexConfigPath = path.join(homeDir, ".codex/config.json");
+      const before = await readFile(codexConfigPath, "utf8");
+
+      const dryRun = await runUninstall({
+        dryRun: true,
+        homeDir,
+        now: fixedNow,
+        projectDir,
+        selectedAgents: ["codex"]
+      });
+      expect(dryRun.agents[0]).toMatchObject({
+        action: "would_remove",
+        backupCreated: false
+      });
+      expect(await readFile(codexConfigPath, "utf8")).toBe(before);
+
+      const manual = await runUninstall({
+        homeDir,
+        now: fixedNow,
+        patchMode: "manual",
+        projectDir,
+        selectedAgents: ["codex"]
+      });
+      expect(manual.agents[0]).toMatchObject({
+        action: "manual_remove",
+        backupCreated: false
+      });
+      expect(manual.agents[0].manualInstructions).toContain("Manual patch mode selected");
+      expect(await readFile(codexConfigPath, "utf8")).toBe(before);
+
+      const missing = await runUninstall({
+        homeDir,
+        now: fixedNow,
+        projectDir,
+        selectedAgents: ["openclaw"]
+      });
+      expect(missing.agents[0].action).toBe("missing");
+
+      await writeJson(path.join(homeDir, ".openclaw/config.json"), { existing: true });
+      await mkdir(path.join(homeDir, ".claude"), { recursive: true });
+      await writeFile(path.join(homeDir, ".claude/settings.json"), "{not json", "utf8");
+
+      const mixed = await runUninstall({
+        homeDir,
+        now: fixedNow,
+        projectDir,
+        selectedAgents: ["claude", "openclaw"]
+      });
+      expect(mixed.agents.map((agent) => [agent.agent, agent.action])).toEqual([
+        ["claude", "skipped_invalid"],
+        ["openclaw", "unchanged"]
+      ]);
+    });
+  });
+
+  it("uninstall removes empty Claude hook containers when no user hooks remain", async () => {
+    await withFixture(async ({ homeDir, projectDir }) => {
+      await runInit({
+        dryRun: false,
+        homeDir,
+        now: fixedNow,
+        projectDir,
+        selectedAgents: ["claude"]
+      });
+
+      const result = await runUninstall({
+        homeDir,
+        now: fixedNow,
+        projectDir,
+        selectedAgents: ["claude"]
+      });
+
+      expect(result.agents[0].action).toBe("removed");
+      await expect(readJson(path.join(homeDir, ".claude/settings.json"))).resolves.toEqual({});
     });
   });
 
@@ -413,6 +669,14 @@ describe("installer framework", () => {
 
   it("rejects unsupported or blank agent names before writing files", async () => {
     await withFixture(async ({ homeDir, projectDir }) => {
+      await expect(
+        runInit({
+          homeDir,
+          patchMode: "ask",
+          projectDir,
+          selectedAgents: ["claude"]
+        })
+      ).rejects.toThrow('Unsupported patch mode "ask"');
       await expect(
         runInit({
           homeDir,

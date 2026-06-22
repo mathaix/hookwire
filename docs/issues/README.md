@@ -54,6 +54,7 @@ This backlog is written as GitHub-ready issue specs. Local files remain the sour
 19. [User onboarding and session identity association](019-user-onboarding-session-identity.md)
 20. [Key-based relay authentication and revocation](020-key-based-relay-authentication.md)
 21. [GitHub Actions CI for public repository](021-github-actions-ci.md)
+22. [Integration lifecycle and hook integrity patterns](022-integration-lifecycle-and-hook-integrity.md)
 
 ## Verification
 

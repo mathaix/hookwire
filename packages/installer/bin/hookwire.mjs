@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { runClaudeHook } from "../../agent-adapters/src/claude.mjs";
-import { runDoctor, runInit, supportedAgents } from "../src/installer.mjs";
+import { runDoctor, runInit, runUninstall, supportedAgents } from "../src/installer.mjs";
 
 async function main(argv) {
   const [command, ...args] = argv;
@@ -16,6 +16,7 @@ async function main(argv) {
     const result = await runInit({
       dryRun: options.dryRun,
       homeDir: options.homeDir,
+      patchMode: options.patchMode,
       projectDir: options.projectDir,
       selectedAgents: options.selectedAgents
     });
@@ -30,6 +31,18 @@ async function main(argv) {
     });
     printResult(result, options.json, formatDoctorText);
     return result.ok ? 0 : 2;
+  }
+
+  if (command === "uninstall") {
+    const result = await runUninstall({
+      dryRun: options.dryRun,
+      homeDir: options.homeDir,
+      patchMode: options.patchMode,
+      projectDir: options.projectDir,
+      selectedAgents: options.selectedAgents
+    });
+    printResult(result, options.json, formatUninstallText);
+    return 0;
   }
 
   if (command === "hook") {
@@ -74,6 +87,14 @@ function parseArgs(args) {
     }
     if (arg === "--project") {
       options.projectDir = readValue(args, (index += 1), "--project");
+      continue;
+    }
+    if (arg === "--patch-mode") {
+      options.patchMode = readValue(args, (index += 1), "--patch-mode");
+      continue;
+    }
+    if (arg === "--no-patch") {
+      options.patchMode = "manual";
       continue;
     }
     if (arg === "--agent") {
@@ -134,6 +155,7 @@ function formatInitText(result) {
   const lines = [
     `Hookwire init ${result.dryRun ? "(dry run)" : ""}`.trim(),
     `Home: ${result.homeDir}`,
+    `Patch mode: ${result.patchMode}`,
     `Project: ${result.projectDir}`,
     ""
   ];
@@ -145,6 +167,34 @@ function formatInitText(result) {
     }
     if (agent.error) {
       lines.push(`  error: ${agent.error}`);
+    }
+    if (agent.manualInstructions) {
+      lines.push(`  manual: ${agent.manualInstructions}`);
+    }
+  }
+
+  return `${lines.join("\n")}\n`;
+}
+
+function formatUninstallText(result) {
+  const lines = [
+    `Hookwire uninstall ${result.dryRun ? "(dry run)" : ""}`.trim(),
+    `Home: ${result.homeDir}`,
+    `Patch mode: ${result.patchMode}`,
+    `Project: ${result.projectDir}`,
+    ""
+  ];
+
+  for (const agent of result.agents) {
+    lines.push(`${agent.agent}: ${agent.action} ${agent.configPath}`);
+    if (agent.backupPath) {
+      lines.push(`  backup: ${agent.backupPath}`);
+    }
+    if (agent.error) {
+      lines.push(`  error: ${agent.error}`);
+    }
+    if (agent.manualInstructions) {
+      lines.push(`  manual: ${agent.manualInstructions}`);
     }
   }
 
@@ -165,6 +215,9 @@ function formatDoctorText(result) {
       lines.push(`  expected: ${agent.expected.adapterCommand}`);
       lines.push(`  actual: ${agent.actual?.adapterCommand ?? "missing"}`);
     }
+    if (agent.status === "tampered") {
+      lines.push(`  integrity: ${agent.actual?.integrityCheck?.status ?? "unknown"}`);
+    }
     if (agent.error) {
       lines.push(`  error: ${agent.error}`);
     }
@@ -177,8 +230,9 @@ function printHelp() {
   process.stdout.write(`Hookwire installer
 
 Usage:
-  hookwire init [--dry-run] [--home <dir>] [--project <dir>] [--agent <agent[,agent]>] [--json]
+  hookwire init [--dry-run] [--no-patch|--patch-mode auto|manual] [--home <dir>] [--project <dir>] [--agent <agent[,agent]>] [--json]
   hookwire doctor [--home <dir>] [--project <dir>] [--json]
+  hookwire uninstall [--dry-run] [--no-patch|--patch-mode auto|manual] [--home <dir>] [--project <dir>] [--agent <agent[,agent]>] [--json]
   hookwire hook --agent claude --event <event> [--decision <allow|deny|ask>] [--reason <text>]
 
 Supported agents: ${supportedAgents().join(", ")}

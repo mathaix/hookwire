@@ -45,9 +45,10 @@ Try the installer framework against your current home and project directories:
 ```sh
 node packages/installer/bin/hookwire.mjs init --dry-run
 node packages/installer/bin/hookwire.mjs doctor
+node packages/installer/bin/hookwire.mjs uninstall --dry-run
 ```
 
-The installer writes a Hookwire-managed JSON config block for Claude Code, Codex, and OpenClaw. Claude Code hook installation is wired through exec-form hooks that invoke `hookwire hook --agent claude`; Codex and OpenClaw adapters are still pending. Run installer changes with `--dry-run` first.
+The installer writes a Hookwire-managed JSON config block for Claude Code, Codex, and OpenClaw. Claude Code hook installation is wired through exec-form hooks that invoke `hookwire hook --agent claude`; Codex and OpenClaw adapters are still pending. Run installer changes with `--dry-run` first, or use `--no-patch` to review manual instructions without writing files. `hookwire doctor` verifies SHA-256 integrity metadata for the managed hook surface and reports tampered hooks separately from ordinary drift.
 
 Run the standard local verification checks:
 

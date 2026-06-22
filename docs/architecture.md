@@ -47,10 +47,32 @@ Responsibilities:
 - Install or locate the Hookwire binary.
 - Detect Claude Code, Codex, and OpenClaw.
 - Back up existing agent hook configuration.
+- Support dry-run, manual/no-patch, automatic patch, doctor, and uninstall lifecycle commands.
 - Register a Hookwire-managed adapter command block before agent-specific adapters translate it into runtime-specific hook formats.
 - For Claude Code, install exec-form command hooks for `PreToolUse`, `PermissionRequest`, and `PostToolUse` that invoke `hookwire hook --agent claude`.
+- Store SHA-256 integrity metadata for the Hookwire-managed hook surface and report tampering through `hookwire doctor`.
 - Create default local policy and relay config.
 - Validate the integration with a sample event.
+
+### Agent Integration Tiers
+
+Hookwire treats agent integrations according to the enforcement capability the agent runtime exposes:
+
+- **Enforcement hook**: the agent invokes Hookwire before a tool runs and accepts an allow, deny, or ask decision. Claude Code is the first implementation of this tier. These adapters must fail closed for malformed pre-execution approval events.
+- **Plugin adapter**: the agent loads a Hookwire plugin or extension that can inspect or mutate tool calls in-process. OpenClaw is expected to use this tier when its plugin contract is implemented.
+- **Awareness-only**: the agent can read guidance or configuration but does not expose a reliable programmatic enforcement hook. Codex is treated as awareness-only until a true hook/event contract is available.
+
+Integration tiers are written into the Hookwire-managed installer config alongside a failure mode. `fail_closed` means Hookwire should stop unsafe or unverifiable pre-execution operations when the host supports it. `advisory` means the integration cannot enforce decisions by itself and must not be represented as a security boundary.
+
+### Policy Precedence
+
+Policy evaluation uses least-privilege precedence:
+
+```text
+deny > ask > allow > default
+```
+
+Explicit denies always win. Explicit asks route to the configured approval target. Allows apply only when no deny or ask rule matches. Defaults should ask for enforcement-capable integrations and remain advisory for awareness-only integrations.
 
 ### Integration Workers
 

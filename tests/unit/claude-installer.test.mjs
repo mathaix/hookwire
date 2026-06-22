@@ -75,7 +75,7 @@ describe("Claude installer integration", () => {
     });
   });
 
-  it("doctor validates Claude hook config and detects drifted hook commands", async () => {
+  it("doctor validates Claude hook config and detects tampered hook commands", async () => {
     await withFixture(async ({ homeDir, projectDir }) => {
       await runInit({
         dryRun: false,
@@ -95,11 +95,12 @@ describe("Claude installer integration", () => {
       findHook(settings, "PreToolUse").args = ["hook", "--agent", "claude", "--event", "PreToolUse", "--project", "/wrong"];
       await writeJson(settingsPath, settings);
 
-      const drifted = await runDoctor({ homeDir, projectDir });
-      const claude = drifted.agents.find((agent) => agent.agent === "claude");
+      const tampered = await runDoctor({ homeDir, projectDir });
+      const claude = tampered.agents.find((agent) => agent.agent === "claude");
       expect(claude).toMatchObject({
-        status: "drifted"
+        status: "tampered"
       });
+      expect(claude.actual.integrityCheck.status).toBe("tampered");
       expect(claude.expected.claudeHooks).toMatchObject(expectedClaudeHooks({ projectDir }));
       expect(claude.actual.claudeHooks.PreToolUse[0].hooks[0].args).toContain("/wrong");
     });

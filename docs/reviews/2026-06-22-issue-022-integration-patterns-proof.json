@@ -1,0 +1,202 @@
+{
+  "issue": "022-integration-patterns",
+  "generatedAt": "2026-06-22T14:04:22.101Z",
+  "fixture": {
+    "homeDir": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/home",
+    "projectDir": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/project",
+    "root": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p"
+  },
+  "manualPatchMode": {
+    "actions": [
+      {
+        "action": "manual_update",
+        "agent": "claude",
+        "manualInstructions": "Manual patch mode selected: update the Hookwire-managed section in /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/home/.claude/settings.json, or rerun without --no-patch to let Hookwire update it."
+      },
+      {
+        "action": "manual_create",
+        "agent": "codex",
+        "manualInstructions": "Manual patch mode selected: create the Hookwire-managed section in /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/home/.codex/config.json, or rerun without --no-patch to let Hookwire update it."
+      }
+    ],
+    "afterTree": [
+      {
+        "kind": "dir",
+        "path": "home"
+      },
+      {
+        "kind": "dir",
+        "path": "home/.claude"
+      },
+      {
+        "bytes": 234,
+        "kind": "file",
+        "path": "home/.claude/settings.json"
+      },
+      {
+        "kind": "dir",
+        "path": "project"
+      }
+    ],
+    "beforeTree": [
+      {
+        "kind": "dir",
+        "path": "home"
+      },
+      {
+        "kind": "dir",
+        "path": "home/.claude"
+      },
+      {
+        "bytes": 234,
+        "kind": "file",
+        "path": "home/.claude/settings.json"
+      },
+      {
+        "kind": "dir",
+        "path": "project"
+      }
+    ],
+    "fileUnchanged": true
+  },
+  "init": {
+    "actions": [
+      {
+        "action": "updated",
+        "agent": "claude",
+        "backupCreated": true,
+        "configPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/home/.claude/settings.json",
+        "failureMode": "fail_closed",
+        "integrationTier": "enforcement_hook",
+        "integrity": {
+          "algorithm": "sha256",
+          "value": "14d19cef50c5179ea2f31a80ff1a2c66ea111acc5da05d83474c4c3f108723ef"
+        }
+      },
+      {
+        "action": "created",
+        "agent": "codex",
+        "backupCreated": false,
+        "configPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/home/.codex/config.json",
+        "failureMode": "advisory",
+        "integrationTier": "awareness_only",
+        "integrity": {
+          "algorithm": "sha256",
+          "value": "179979ace742065a422d0bdc365566172f0488546d4e65d6ff4c8841b0f47978"
+        }
+      },
+      {
+        "action": "created",
+        "agent": "openclaw",
+        "backupCreated": false,
+        "configPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/home/.openclaw/config.json",
+        "failureMode": "fail_closed",
+        "integrationTier": "plugin_adapter",
+        "integrity": {
+          "algorithm": "sha256",
+          "value": "9815341b334d01f1b1400f04587cbec58d0e513c7274354bcf0a7b9df29a2bfa"
+        }
+      }
+    ],
+    "claudeConfigDiff": "--- before/.claude/settings.json\n+++ after/.claude/settings.json\n@@\n-{\n-  \"hooks\": {\n-    \"PostToolUse\": [\n-      {\n-        \"hooks\": [\n-          {\n-            \"command\": \"echo existing\",\n-            \"type\": \"command\"\n-          }\n-        ],\n-        \"matcher\": \"Write\"\n-      }\n-    ]\n-  },\n-  \"theme\": \"dark\"\n-}\n+{\n+  \"hooks\": {\n+    \"PostToolUse\": [\n+      {\n+        \"hooks\": [\n+          {\n+            \"args\": [\n+              \"hook\",\n+              \"--agent\",\n+              \"claude\",\n+              \"--event\",\n+              \"PostToolUse\",\n+              \"--project\",\n+              \"/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/project\"\n+            ],\n+            \"command\": \"hookwire\",\n+            \"statusMessage\": \"Checking Hookwire approval policy\",\n+            \"timeout\": 60,\n+            \"type\": \"command\"\n+          }\n+        ],\n+        \"matcher\": \"*\"\n+      },\n+      {\n+        \"hooks\": [\n+          {\n+            \"command\": \"echo existing\",\n+            \"type\": \"command\"\n+          }\n+        ],\n+        \"matcher\": \"Write\"\n+      }\n+    ],\n+    \"PreToolUse\": [\n+      {\n+        \"hooks\": [\n+          {\n+            \"args\": [\n+              \"hook\",\n+              \"--agent\",\n+              \"claude\",\n+              \"--event\",\n+              \"PreToolUse\",\n+              \"--project\",\n+              \"/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/project\"\n+            ],\n+            \"command\": \"hookwire\",\n+            \"statusMessage\": \"Checking Hookwire approval policy\",\n+            \"timeout\": 60,\n+            \"type\": \"command\"\n+          }\n+        ],\n+        \"matcher\": \"*\"\n+      }\n+    ],\n+    \"PermissionRequest\": [\n+      {\n+        \"hooks\": [\n+          {\n+            \"args\": [\n+              \"hook\",\n+              \"--agent\",\n+              \"claude\",\n+              \"--event\",\n+              \"PermissionRequest\",\n+              \"--project\",\n+              \"/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/project\"\n+            ],\n+            \"command\": \"hookwire\",\n+            \"statusMessage\": \"Checking Hookwire approval policy\",\n+            \"timeout\": 60,\n+            \"type\": \"command\"\n+          }\n+        ],\n+        \"matcher\": \"*\"\n+      }\n+    ]\n+  },\n+  \"theme\": \"dark\",\n+  \"hookwire\": {\n+    \"adapterCommand\": \"hookwire relay --agent claude --project /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/project\",\n+    \"agent\": \"claude\",\n+    \"failureMode\": \"fail_closed\",\n+    \"installedAt\": \"2026-06-22T13:30:00.000Z\",\n+    \"integrationTier\": \"enforcement_hook\",\n+    \"managed\": true,\n+    \"projectPath\": \"/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/project\",\n+    \"version\": 2,\n+    \"integrity\": {\n+      \"algorithm\": \"sha256\",\n+      \"value\": \"14d19cef50c5179ea2f31a80ff1a2c66ea111acc5da05d83474c4c3f108723ef\"\n+    }\n+  }\n+}"
+  },
+  "doctor": {
+    "healthy": [
+      {
+        "agent": "claude",
+        "integrityStatus": "verified",
+        "status": "healthy"
+      },
+      {
+        "agent": "codex",
+        "integrityStatus": "verified",
+        "status": "healthy"
+      },
+      {
+        "agent": "openclaw",
+        "integrityStatus": "verified",
+        "status": "healthy"
+      }
+    ],
+    "tampered": [
+      {
+        "agent": "claude",
+        "integrityStatus": "tampered",
+        "status": "tampered"
+      },
+      {
+        "agent": "codex",
+        "integrityStatus": "verified",
+        "status": "healthy"
+      },
+      {
+        "agent": "openclaw",
+        "integrityStatus": "verified",
+        "status": "healthy"
+      }
+    ]
+  },
+  "uninstall": {
+    "actions": [
+      {
+        "action": "removed",
+        "agent": "claude",
+        "backupCreated": true,
+        "backupPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/home/.claude/.hookwire-backups/settings.json.2026-06-22T14-30-00-000Z.bak",
+        "configPath": "/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/home/.claude/settings.json"
+      }
+    ],
+    "afterTree": [
+      {
+        "kind": "dir",
+        "path": "home"
+      },
+      {
+        "kind": "dir",
+        "path": "home/.claude"
+      },
+      {
+        "kind": "dir",
+        "path": "home/.claude/.hookwire-backups"
+      },
+      {
+        "bytes": 234,
+        "kind": "file",
+        "path": "home/.claude/.hookwire-backups/settings.json.2026-06-22T13-30-00-000Z.bak"
+      },
+      {
+        "bytes": 2599,
+        "kind": "file",
+        "path": "home/.claude/.hookwire-backups/settings.json.2026-06-22T14-30-00-000Z.bak"
+      },
+      {
+        "bytes": 234,
+        "kind": "file",
+        "path": "home/.claude/settings.json"
+      },
+      {
+        "kind": "dir",
+        "path": "home/.codex"
+      },
+      {
+        "bytes": 626,
+        "kind": "file",
+        "path": "home/.codex/config.json"
+      },
+      {
+        "kind": "dir",
+        "path": "home/.openclaw"
+      },
+      {
+        "bytes": 635,
+        "kind": "file",
+        "path": "home/.openclaw/config.json"
+      },
+      {
+        "kind": "dir",
+        "path": "project"
+      }
+    ],
+    "claudeConfigDiff": "--- installed/.claude/settings.json\n+++ uninstalled/.claude/settings.json\n@@\n-{\n-  \"hooks\": {\n-    \"PostToolUse\": [\n-      {\n-        \"hooks\": [\n-          {\n-            \"args\": [\n-              \"hook\",\n-              \"--agent\",\n-              \"claude\",\n-              \"--event\",\n-              \"PostToolUse\",\n-              \"--project\",\n-              \"/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/project\"\n-            ],\n-            \"command\": \"hookwire\",\n-            \"statusMessage\": \"Checking Hookwire approval policy\",\n-            \"timeout\": 60,\n-            \"type\": \"command\"\n-          }\n-        ],\n-        \"matcher\": \"*\"\n-      },\n-      {\n-        \"hooks\": [\n-          {\n-            \"command\": \"echo existing\",\n-            \"type\": \"command\"\n-          }\n-        ],\n-        \"matcher\": \"Write\"\n-      }\n-    ],\n-    \"PreToolUse\": [\n-      {\n-        \"hooks\": [\n-          {\n-            \"args\": [\n-              \"hook\",\n-              \"--agent\",\n-              \"claude\",\n-              \"--event\",\n-              \"PreToolUse\",\n-              \"--project\",\n-              \"/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/project\"\n-            ],\n-            \"command\": \"hookwire\",\n-            \"statusMessage\": \"Checking Hookwire approval policy\",\n-            \"timeout\": 60,\n-            \"type\": \"command\"\n-          }\n-        ],\n-        \"matcher\": \"*\"\n-      }\n-    ],\n-    \"PermissionRequest\": [\n-      {\n-        \"hooks\": [\n-          {\n-            \"args\": [\n-              \"hook\",\n-              \"--agent\",\n-              \"claude\",\n-              \"--event\",\n-              \"PermissionRequest\",\n-              \"--project\",\n-              \"/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/project\"\n-            ],\n-            \"command\": \"hookwire\",\n-            \"statusMessage\": \"Checking Hookwire approval policy\",\n-            \"timeout\": 60,\n-            \"type\": \"command\"\n-          }\n-        ],\n-        \"matcher\": \"*\"\n-      }\n-    ]\n-  },\n-  \"theme\": \"dark\",\n-  \"hookwire\": {\n-    \"adapterCommand\": \"hookwire relay --agent claude --project /var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/project\",\n-    \"agent\": \"claude\",\n-    \"failureMode\": \"fail_closed\",\n-    \"installedAt\": \"2026-06-22T13:30:00.000Z\",\n-    \"integrationTier\": \"enforcement_hook\",\n-    \"managed\": true,\n-    \"projectPath\": \"/var/folders/3n/7ppzzbm91fd23b8r399wddt00000gn/T/hookwire-integration-patterns-proof-0Rmx9p/project\",\n-    \"version\": 2,\n-    \"integrity\": {\n-      \"algorithm\": \"sha256\",\n-      \"value\": \"14d19cef50c5179ea2f31a80ff1a2c66ea111acc5da05d83474c4c3f108723ef\"\n-    }\n-  }\n-}\n+{\n+  \"hooks\": {\n+    \"PostToolUse\": [\n+      {\n+        \"hooks\": [\n+          {\n+            \"command\": \"echo existing\",\n+            \"type\": \"command\"\n+          }\n+        ],\n+        \"matcher\": \"Write\"\n+      }\n+    ]\n+  },\n+  \"theme\": \"dark\"\n+}"
+  }
+}
